@@ -1,6 +1,8 @@
 body {
     position: relative;
     background-color: black;
+    font-family: cursive;
+    color: #ffffff;
 }
 
 .header {
@@ -16,8 +18,6 @@ body {
 }
 
 .header_salute {
-    color: #ffffff;
-    font-family: cursive;
     font-size: x-large;
 }
 
@@ -32,4 +32,13 @@ body {
     width: 20%;
     height: 100%;
     border-style: groove;
+}
+
+.config_title {
+    width: 100%;
+    text-align: center;
+}
+
+.config_color, .config_lang {
+    margin: 3% 0;
 }
