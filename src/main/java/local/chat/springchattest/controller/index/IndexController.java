@@ -20,6 +20,8 @@ public class IndexController {
     @GetMapping("/")
     public String showIndex(@RequestParam(value = "lang", required = false) String lang,
                             Model model) {
-        model.addAttribute("lang", )
+        model.addAttribute("languages", siteDAO.getConfigurations(lang));
+        model.addAttribute("languagesMap", );
+        return "index";
     }
 }
