@@ -1,8 +1,8 @@
 package local.chat.springchattest.dao;
 
-import local.chat.springchattest.entity.Site;
+import local.chat.springchattest.entity.site.UserSiteConfiguration;
 
 public interface SiteDAO {
 
-    Site getConfigurations(String lang);
+    UserSiteConfiguration getConfigurations(String lang);
 }

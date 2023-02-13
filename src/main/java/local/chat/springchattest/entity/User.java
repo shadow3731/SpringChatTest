@@ -1,6 +1,7 @@
 package local.chat.springchattest.entity;
 
 import jakarta.persistence.*;
+import local.chat.springchattest.entity.site.UserSiteConfiguration;
 
 import java.util.Date;
 
@@ -30,12 +31,12 @@ public class User {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "configuration_site_id")
-    private Site siteConfiguration;
+    private UserSiteConfiguration siteConfiguration;
 
     public User() {
     }
 
-    public User(int id, String nickname, char[] password, String authority, Date registrationAt, Date lastOnlineAt, Site siteConfiguration) {
+    public User(int id, String nickname, char[] password, String authority, Date registrationAt, Date lastOnlineAt, UserSiteConfiguration siteConfiguration) {
         this.id = id;
         this.nickname = nickname;
         this.password = password;
@@ -93,11 +94,11 @@ public class User {
         this.lastOnlineAt = lastOnlineAt;
     }
 
-    public Site getSiteConfiguration() {
+    public UserSiteConfiguration getSiteConfiguration() {
         return siteConfiguration;
     }
 
-    public void setSiteConfiguration(Site siteConfiguration) {
+    public void setSiteConfiguration(UserSiteConfiguration siteConfiguration) {
         this.siteConfiguration = siteConfiguration;
     }
 
