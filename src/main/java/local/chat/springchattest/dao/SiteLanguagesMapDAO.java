@@ -1,8 +1,8 @@
 package local.chat.springchattest.dao;
 
-import java.util.HashMap;
+import local.chat.springchattest.entity.site.SiteLanguagesMap;
 
 public interface SiteLanguagesMapDAO {
 
-    HashMap<String, String> getLanguageMap(String languageCode);
+    SiteLanguagesMap getLanguageMap(String languageCode);
 }
