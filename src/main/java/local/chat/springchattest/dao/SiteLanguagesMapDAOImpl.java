@@ -2,11 +2,12 @@ package local.chat.springchattest.dao;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import local.chat.springchattest.entity.site.UserSiteConfiguration;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+
 @Repository
-public class SiteDAOImpl implements SiteDAO {
+public class SiteLanguagesMapDAOImpl implements SiteLanguagesMapDAO {
 
     private EntityManager entityManager;
 
@@ -16,7 +17,7 @@ public class SiteDAOImpl implements SiteDAO {
     }
 
     @Override
-    public UserSiteConfiguration getConfigurations(String lang) {
+    public HashMap<String, String> getLanguageMap(String languageCode) {
         return null;
     }
 }

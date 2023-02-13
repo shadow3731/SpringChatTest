@@ -1,6 +1,7 @@
 package local.chat.springchattest.controller.index;
 
-import local.chat.springchattest.dao.SiteDAO;
+import local.chat.springchattest.dao.UserDAO;
+import local.chat.springchattest.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,18 +11,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class IndexController {
 
-    private SiteDAO siteDAO;
+    private UserDAO userDAO;
 
     @Autowired
-    public void setSiteDAO(SiteDAO siteDAO) {
-        this.siteDAO = siteDAO;
+    public void setSiteDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 
-    /*@GetMapping("/")
-    public String showIndex(@RequestParam(value = "lang", required = false) String lang,
+    @GetMapping("/")
+    public String showIndex(@RequestParam(value = "id") int id,
                             Model model) {
-        model.addAttribute("languages", siteDAO.getConfigurations(lang));
-        model.addAttribute("languagesMap", );
+        User user = userDAO.getUser(id);
+        model.addAttribute("languages", user
+                .getSiteConfiguration()
+                .getLanguagesConfiguration()
+                .getLanguage());
         return "index";
-    }*/
+    }
 }
