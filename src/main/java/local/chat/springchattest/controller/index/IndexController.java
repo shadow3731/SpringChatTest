@@ -39,7 +39,8 @@ public class IndexController {
                 .getSiteConfiguration()
                 .getLanguagesConfiguration()
                 .getLanguage());
-        model.addAttribute("languageMap", languagesMap);
+        model.addAttribute("languageMap", languagesMap
+                .getLanguagesMap());
         return "index";
     }
 }

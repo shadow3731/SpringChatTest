@@ -7,43 +7,49 @@
 </head>
 <body>
     <header class="header">
-        <div class="header_salute">Добро пожаловать в чат!</div>
+        <div class="header_salute"
+             th:utext="${languageMap.get('Welcome title')}"></div>
     </header>
 
     <div class="main_body">
-        <form class="config" th:method="get">
-            <div class="config_title">Настройки</div>
+        <form class="config"
+              th:method="get" th:action="@{}">
+            <div class="config_title"
+                 th:utext="${languageMap.get('Settings')}"></div>
             <div class="config_color">
-                <div class="config_color_title">Фон сайта</div>
+                <div class="config_color_title"
+                     th:utext="${languageMap.get('Site background')}"></div>
                 <select class="config_color_select">
 
                 </select>
             </div>
             <div class="config_lang">
-                <div class="config_lang_title">Язык интерфейса</div>
+                <div class="config_lang_title"
+                     th:utext="${languageMap.get('Interface language')}"></div>
                 <select class="config_lang_select">
-                    <option selected value="ru">Русский</option>
+                    <option disabled
+                            th:utext="${languageMap.get('Language choosing')}"></option>
+                    <option value="ru">Русский</option>
                     <option value="en">English</option>
                 </select>
             </div>
             <input class="config_change"
                    type="button"
-                   value="Изменить"
-                   disabled>
+                   th:value="${languageMap.get('Change settings button')}">
         </form>
 
         <form class="chat_menu">
             <input class="chat_room1_enter"
                    type="button"
-                   value="Чат комната 1"
+                   th:value="${languageMap.get('Room 1')}"
                    disabled>
             <input class="chat_room2_enter"
                    type="button"
-                   value="Чат комната 2"
+                   th:value="${languageMap.get('Room 2')}"
                    disabled>
             <input class="admin_room_enter"
                    type="button"
-                   value="Системные настройки сайта"
+                   th:value="${languageMap.get('Admin room')}"
                    disabled>
         </form>
     </div>
