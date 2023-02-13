@@ -17,11 +17,11 @@ public class IndexController {
         this.siteDAO = siteDAO;
     }
 
-    @GetMapping("/")
+    /*@GetMapping("/")
     public String showIndex(@RequestParam(value = "lang", required = false) String lang,
                             Model model) {
         model.addAttribute("languages", siteDAO.getConfigurations(lang));
         model.addAttribute("languagesMap", );
         return "index";
-    }
+    }*/
 }

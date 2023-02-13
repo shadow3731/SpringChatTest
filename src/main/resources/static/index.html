@@ -14,11 +14,37 @@
         <form class="config" th:method="get">
             <div class="config_title">Настройки</div>
             <div class="config_color">
+                <div class="config_color_title">Фон сайта</div>
+                <select class="config_color_select">
 
+                </select>
             </div>
             <div class="config_lang">
-
+                <div class="config_lang_title">Язык интерфейса</div>
+                <select class="config_lang_select">
+                    <option selected value="ru">Русский</option>
+                    <option value="en">English</option>
+                </select>
             </div>
+            <input class="config_change"
+                   type="button"
+                   value="Изменить"
+                   disabled>
+        </form>
+
+        <form class="chat_menu">
+            <input class="chat_room1_enter"
+                   type="button"
+                   value="Чат комната 1"
+                   disabled>
+            <input class="chat_room2_enter"
+                   type="button"
+                   value="Чат комната 2"
+                   disabled>
+            <input class="admin_room_enter"
+                   type="button"
+                   value="Системные настройки сайта"
+                   disabled>
         </form>
     </div>
 </body>
