@@ -7,12 +7,11 @@
 </head>
 <body>
     <header class="header">
-        <div class="header_salute"
-             th:utext="${languageMap.get('Welcome title')}"></div>
+        <div class="header_salute">Welcome to the chat!</div>
     </header>
 
     <div class="main_body">
-        <form class="config"
+        <!--form class="config"
               th:method="get" th:action="@{}">
             <div class="config_title"
                  th:utext="${languageMap.get('Settings')}"></div>
@@ -36,22 +35,29 @@
             <input class="config_change"
                    type="button"
                    th:value="${languageMap.get('Change settings button')}">
-        </form>
+        </form-->
 
         <form class="chat_menu">
             <input class="chat_room1_enter"
                    type="button"
-                   th:value="${languageMap.get('Room 1')}"
+                   value="Room 1"
                    disabled>
             <input class="chat_room2_enter"
                    type="button"
-                   th:value="${languageMap.get('Room 2')}"
+                   value="Room 2"
                    disabled>
             <input class="admin_room_enter"
                    type="button"
-                   th:value="${languageMap.get('Admin room')}"
+                   value="Site configuration"
                    disabled>
         </form>
     </div>
+
+    <footer class="footer">
+        <div class="footer_all_users">
+            <div class="footer_all_users_title">Total users: </div>
+            <div class="footer_all_users_amount"></div>
+        </div>
+    </footer>
 </body>
 </html>
