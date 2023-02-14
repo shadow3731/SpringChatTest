@@ -15,8 +15,10 @@ public class UsersController {
         this.usersService = usersService;
     }
 
+
     @GetMapping("/users/count")
     public int countUsers() {
+        System.out.println(usersService.countAllUsers());
         return usersService.countAllUsers();
     }
 }

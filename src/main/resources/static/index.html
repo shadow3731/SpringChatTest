@@ -56,7 +56,10 @@
     <footer class="footer">
         <div class="footer_all_users">
             <div class="footer_all_users_title">Total users: </div>
-            <div class="footer_all_users_amount"></div>
+            <div class="footer_all_users_amount"
+                 th:method="get"
+                 th:action="@{/users/count}"
+                 th:value="${usersCount}"></div>
         </div>
     </footer>
 </body>

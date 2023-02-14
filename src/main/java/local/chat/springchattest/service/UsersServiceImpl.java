@@ -16,6 +16,6 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public int countAllUsers() {
-        return usersDAO.countAll();
+        return usersDAO.findAll().size();
     }
 }

@@ -1,14 +1,12 @@
 package local.chat.springchattest.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "users")
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -27,6 +25,13 @@ public class User {
 
     @Column(name = "authority")
     private String authority;
+
+    public User(int id, String nickname, char[] password, String authority) {
+        this.id = id;
+        this.nickname = nickname;
+        this.password = password;
+        this.authority = authority;
+    }
 
     @Override
     public String toString() {
