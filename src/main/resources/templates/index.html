@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/html">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/html"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Chat</title>
-    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
     <header class="header">
@@ -37,7 +39,7 @@
                    th:value="${languageMap.get('Change settings button')}">
         </form-->
 
-        <form class="chat_menu">
+        <div class="chat_menu">
             <input class="chat_room1_enter"
                    type="button"
                    value="Room 1"
@@ -50,16 +52,14 @@
                    type="button"
                    value="Site configuration"
                    disabled>
-        </form>
+        </div>
     </div>
 
     <footer class="footer">
         <div class="footer_all_users">
             <div class="footer_all_users_title">Total users: </div>
             <div class="footer_all_users_amount"
-                 th:method="get"
-                 th:action="@{/users/count}"
-                 th:value="${usersCount}"></div>
+                 th:text="${totalUsers}"></div>
         </div>
     </footer>
 </body>
