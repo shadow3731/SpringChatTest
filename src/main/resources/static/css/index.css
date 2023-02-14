@@ -3,7 +3,7 @@ body {
     position: relative;
     background-color: black;
     font-family: cursive;
-    font-size: 20px;
+    font-size: 1.5vw;
     color: #ffffff;
 }
 
@@ -29,7 +29,7 @@ body {
 }
 
 .header_salute {
-    font-size: x-large;
+
 }
 
 .main_body {
@@ -96,7 +96,7 @@ body {
     width: 90%;
     margin: 13px 0;
     font-family: cursive;
-    font-size: 80%;
+    font-size: 1.3vw;
     color: #ffff0090;
     opacity: 100%;
     background-color: #000000;
@@ -114,7 +114,7 @@ body {
     width: 90%;
     margin: 13px 0;
     font-family: cursive;
-    font-size: 80%;
+    font-size: 1.3vw;
     color: #ffff0090;
     opacity: 50%;
     background-color: #000000;
@@ -126,4 +126,21 @@ body {
 
 .footer {
     margin-top: 1%;
+}
+
+.footer_all_users {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    font-size: 1.2vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer_all_users_title {
+    margin-right: 0.15%;
+}
+
+.footer_all_users_amount {
+    margin-left: 0.15%;
 }
