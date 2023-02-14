@@ -8,37 +8,9 @@
     <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
-    <header class="header">
-        <div class="header_salute">Welcome to the chat!</div>
-    </header>
+    <div th:insert="common :: commonHeader"></div>
 
-    <div class="main_body">
-        <!--form class="config"
-              th:method="get" th:action="@{}">
-            <div class="config_title"
-                 th:utext="${languageMap.get('Settings')}"></div>
-            <div class="config_color">
-                <div class="config_color_title"
-                     th:utext="${languageMap.get('Site background')}"></div>
-                <select class="config_color_select">
-
-                </select>
-            </div>
-            <div class="config_lang">
-                <div class="config_lang_title"
-                     th:utext="${languageMap.get('Interface language')}"></div>
-                <select class="config_lang_select">
-                    <option disabled
-                            th:utext="${languageMap.get('Language choosing')}"></option>
-                    <option value="ru">Русский</option>
-                    <option value="en">English</option>
-                </select>
-            </div>
-            <input class="config_change"
-                   type="button"
-                   th:value="${languageMap.get('Change settings button')}">
-        </form-->
-
+    <div class="container">
         <div class="chat_menu">
             <input class="chat_room1_enter"
                    type="button"
@@ -55,12 +27,6 @@
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="footer_all_users">
-            <div class="footer_all_users_title">Total users: </div>
-            <div class="footer_all_users_amount"
-                 th:text="${totalUsers}"></div>
-        </div>
-    </footer>
+    <div th:insert="common :: commonFooter"></div>
 </body>
 </html>

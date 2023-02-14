@@ -1,0 +1,15 @@
+<html lang="en">
+<body>
+    <header class="header" th:fragment="commonHeader">
+        <div class="header_salute">Welcome to the chat!</div>
+    </header>
+
+    <footer class="footer" th:fragment="commonFooter">
+        <div class="footer_all_users">
+            <div class="footer_all_users_title">Total users: </div>
+            <div class="footer_all_users_amount"
+                 th:text="${totalUsers}"></div>
+        </div>
+    </footer>
+</body>
+</html>
