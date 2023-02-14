@@ -1,0 +1,24 @@
+.table {
+    width: 85%;
+    height: 100%;
+    font-size: 1.25vw;
+}
+
+.table_head, .table_row:hover {
+    box-shadow: 0 0 4px #ffffff;
+    border-top: solid 1px #ffffff;
+    border-bottom: solid 1px #ffffff;
+}
+
+.table_head_first_cell, .table_head_not_first_cell,
+.table_first_cell, .table_not_first_cell {
+
+}
+
+.table_head_first_cell, .table_first_cell {
+
+}
+
+.table_first_cell, .table_not_first_cell {
+    padding-left: 1%;
+}

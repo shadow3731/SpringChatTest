@@ -37,7 +37,7 @@ body {
     height: 100%;
     position: relative;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .config {
@@ -84,7 +84,7 @@ body {
 }
 
 .chat_menu {
-    width: 100%;
+    width: 85%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -143,4 +143,8 @@ body {
 
 .footer_all_users_amount {
     margin-left: 0.15%;
+}
+
+.footer_all_users_amount_href {
+    color: #ffffff;
 }

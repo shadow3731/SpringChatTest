@@ -8,7 +8,8 @@
     <link rel="stylesheet" th:href="@{/css/index.css}">
 </head>
 <body>
-    <div th:insert="common :: commonHeader"></div>
+
+    <div th:insert="~{common :: commonHeader}"></div>
 
     <div class="container">
         <div class="chat_menu">
@@ -27,6 +28,7 @@
         </div>
     </div>
 
-    <div th:insert="common :: commonFooter"></div>
+    <div th:insert="~{common :: commonFooter}"></div>
+
 </body>
 </html>

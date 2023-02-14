@@ -18,8 +18,15 @@ public class ChatController {
     }
 
     @GetMapping("/")
-    public String showIndex() {
+    public String showIndexPage() {
         return "index";
+    }
+
+    @GetMapping("/users")
+    public String showUsersPage(Model model) {
+        model.addAttribute("users",
+                usersService.getAllUsers());
+        return "users";
     }
 
     @ModelAttribute

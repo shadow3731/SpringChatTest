@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/html"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/users.css}">
+</head>
+<body>
+
+    <div th:insert="~{common :: commonHeader}"></div>
+
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr class="table_head">
+                    <th class="table_head_first_cell">ID</th>
+                    <th class="table_head_not_first_cell">Nickname</th>
+                    <th class="table_head_not_first_cell">Authority</th>
+                </tr>
+            </thead>
+            <tbody th:each="user : ${users}">
+                <tr class="table_row">
+                    <td class="table_first_cell"
+                        th:text="${user.getId()}"></td>
+                    <td class="table_not_first_cell"
+                        th:text="${user.getNickname()}"></td>
+                    <td class="table_not_first_cell"
+                        th:text="${user.getAuthority()}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:insert="~{common :: commonFooter}"></div>
+
+</body>
+</html>

@@ -7,8 +7,11 @@
     <footer class="footer" th:fragment="commonFooter">
         <div class="footer_all_users">
             <div class="footer_all_users_title">Total users: </div>
-            <div class="footer_all_users_amount"
-                 th:text="${totalUsers}"></div>
+            <div class="footer_all_users_amount">
+                <a class="footer_all_users_amount_href"
+                   th:href="@{/users}"
+                   th:text="${totalUsers}"></a>
+            </div>
         </div>
     </footer>
 </body>
