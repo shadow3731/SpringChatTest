@@ -13,7 +13,7 @@ function updateContainerSize() {
     let container = document.getElementById("specificContainer");
     let footer = document.getElementById("footer");
 
-    let headerAndFooterHeight = header.scrollHeight + footer.scrollHeight;
+    let headerAndFooterHeight = header.scrollHeight + 2 * footer.scrollHeight;
     let containerHeight = document.documentElement.clientHeight - headerAndFooterHeight;
     container.style.height = containerHeight + "px";
 }

@@ -1,23 +1,29 @@
 package local.chat.springchattest.controller;
 
-import local.chat.springchattest.service.UsersService;
+import local.chat.springchattest.entity.Chat;
+import local.chat.springchattest.service.chats.ChatsService;
+import local.chat.springchattest.service.users.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Date;
 
 @Controller
 public class ChatController {
 
-    private UsersService usersService;
+    private final UsersService usersService;
+    private final ChatsService chatsService;
 
-    @Autowired
-    public void setUsersService(UsersService usersService) {
+    public ChatController(@Autowired UsersService usersService,
+                          @Autowired ChatsService chatsService) {
         this.usersService = usersService;
+        this.chatsService = chatsService;
     }
 
     @GetMapping("/")
@@ -26,11 +32,24 @@ public class ChatController {
     }
 
     @GetMapping("/rooms/{id}")
-    public String enterToChat(@PathVariable("id") int id,
+    public String showChatPage(@PathVariable("id") int id,
                               Model model) {
         model.addAttribute("roomId",
                 "Chat room " + id);
+        model.addAttribute("messages",
+                chatsService.getAllMessagesFromRoom(id));
+        model.addAttribute("chat", new Chat());
         return "rooms";
+    }
+
+    @PostMapping("/rooms/{id}")
+    public String addMessage(@PathVariable("id") int id,
+                           @ModelAttribute Chat chat,
+                           BindingResult bindingResult) {
+        chat.setRoomId(id);
+        chat.setTimestamp(new Date());
+        chatsService.saveMessage(chat);
+        return "redirect:/rooms/" + id;
     }
 
     @GetMapping("/users")

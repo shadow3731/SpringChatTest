@@ -1,4 +1,4 @@
-package local.chat.springchattest.service;
+package local.chat.springchattest.service.users;
 
 import local.chat.springchattest.entity.User;
 
