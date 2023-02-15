@@ -1,10 +1,22 @@
 <html lang="en">
 <body>
-    <header class="header" th:fragment="commonHeader">
-        <div class="header_salute">Welcome to the chat!</div>
+    <header class="header"
+            id="header"
+            th:fragment="commonHeader">
+        <div class="header_left">
+            <button class="header_left_button"
+                    type="button">
+                <a class="header_left_button_href"
+                   th:href="@{/}">Main page</a>
+            </button>
+        </div>
+        <div class="header_center">Welcome to the chat!</div>
+        <div class="header_right"></div>
     </header>
 
-    <footer class="footer" th:fragment="commonFooter">
+    <footer class="footer"
+            id="footer"
+            th:fragment="commonFooter">
         <div class="footer_all_users">
             <div class="footer_all_users_title">Total users: </div>
             <div class="footer_all_users_amount">
@@ -12,6 +24,12 @@
                    th:href="@{/users}"
                    th:text="${totalUsers}"></a>
             </div>
+        </div>
+        <div class="footer_server_time">
+            <div class="footer_server_time_title">Server time:</div>
+            <div class="footer_server_time_value"
+                 th:text="${#dates.format(serverDateTime,
+                    'dd/MM/yyyy HH:mm')}"></div>
         </div>
     </footer>
 </body>

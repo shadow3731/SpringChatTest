@@ -6,6 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.Date;
 
 @Controller
 public class ChatController {
@@ -22,6 +25,14 @@ public class ChatController {
         return "index";
     }
 
+    @GetMapping("/rooms/{id}")
+    public String enterToChat(@PathVariable("id") int id,
+                              Model model) {
+        model.addAttribute("roomId",
+                "Chat room " + id);
+        return "rooms";
+    }
+
     @GetMapping("/users")
     public String showUsersPage(Model model) {
         model.addAttribute("users",
@@ -30,8 +41,10 @@ public class ChatController {
     }
 
     @ModelAttribute
-    public void countUsers(Model model) {
+    public void addCommonInfo(Model model) {
         model.addAttribute("totalUsers",
                 usersService.countAllUsers());
+        model.addAttribute("serverDateTime",
+                new Date());
     }
 }

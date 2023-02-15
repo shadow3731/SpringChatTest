@@ -4,8 +4,10 @@
       xmlns:th="http://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Chat</title>
-    <link rel="stylesheet" th:href="@{/css/index.css}">
+    <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
 </head>
 <body>
 
@@ -13,10 +15,11 @@
 
     <div class="container">
         <div class="chat_menu">
-            <input class="chat_room1_enter"
-                   type="button"
-                   value="Room 1"
-                   disabled>
+            <button class="chat_room1_enter"
+                    type="button">
+                <a class="chat_room1_enter_href"
+                   th:href="@{/rooms/1}">Room 1</a>
+            </button>
             <input class="chat_room2_enter"
                    type="button"
                    value="Room 2"
