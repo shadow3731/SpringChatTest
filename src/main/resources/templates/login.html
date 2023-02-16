@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Sign in</title>
     <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/login.css}" type="text/css">
 </head>
 <body>
 
@@ -15,29 +16,34 @@
 
     <div class="container">
         <form class="login_form"
-              id="loginForm"
-              th:method="post"
-              th:action="@{/login}"
+              th:method="POST"
+              th:action="@{login2}"
               th:object="${user}">
-            <div class="login_form_error"
+            <!--input type="hidden"
+                   name="_csrf"
+                   value="60ca1842-7fba-4b95-9188-04a50a2d21c0" /-->
+            <!--div class="login_form_error"
                  th:if="${#fields.hasErrors('nickname')} and
                     ${#fields.hasErrors('password')}"
                  th:errors="*{nickname} + '\n' + *{password}"
                  th:text="${badCredentials}">
-            </div>
-
+            </div-->
+            <!--div class="login_form_error"
+                 th:if="${#fields.hasErrors('nickname')}"
+                 th:errors="*{nickname}">
+            </div-->
             <label class="login_form_label"
                    for="nickname">Enter nickname</label>
             <input class="login_form_input"
                    type="text"
                    th:field="*{nickname}"
-                   id="nickname"/>
-            <label class="login_form_label"
+                   id="nickname">
+            <!--label class="login_form_label"
                    for="password">Enter password</label>
             <input class="login_form_input"
                    type="password"
                    th:field="*{password}"
-                   id="password"/>
+                   id="password"-->
             <input class="login_form_submit"
                    type="submit"
                    value="Sign in">
