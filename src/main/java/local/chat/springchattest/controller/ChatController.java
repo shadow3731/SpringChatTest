@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
@@ -24,11 +21,6 @@ public class ChatController {
                           @Autowired ChatsService chatsService) {
         this.usersService = usersService;
         this.chatsService = chatsService;
-    }
-
-    @GetMapping("/")
-    public String showIndexPage() {
-        return "index";
     }
 
     @GetMapping("/rooms/{id}")
@@ -50,13 +42,6 @@ public class ChatController {
         chat.setTimestamp(new Date());
         chatsService.saveMessage(chat);
         return "redirect:/rooms/" + id;
-    }
-
-    @GetMapping("/users")
-    public String showUsersPage(Model model) {
-        model.addAttribute("users",
-                usersService.getAllUsers());
-        return "users";
     }
 
     @ModelAttribute

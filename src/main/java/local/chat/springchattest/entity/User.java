@@ -1,6 +1,7 @@
 package local.chat.springchattest.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,15 +19,26 @@ public class User {
     private int id;
 
     @Column(name = "nickname")
+    @Size(min = 3,
+            max = 30,
+            message = "Nickname must be between 3 and 30 symbols")
     private String nickname;
 
     @Column(name = "password")
+    @Size(min = 6,
+            max = 50,
+            message = "Password must be between 3 and 30 symbols")
     private char[] password;
 
-    @Column(name = "authority")
-    private String authority;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id")
+    private Authority authority;
 
-    public User(int id, String nickname, char[] password, String authority) {
+    public User(int id,
+                String nickname, @Size(min = 6,
+            max = 50,
+            message = "Password must be between 3 and 30 symbols") char[] password,
+                Authority authority) {
         this.id = id;
         this.nickname = nickname;
         this.password = password;
@@ -38,7 +50,7 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", nickname='" + nickname + '\'' +
-                ", authority='" + authority + '\'' +
+                ", authority=" + authority +
                 '}';
     }
 }
