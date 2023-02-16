@@ -27,13 +27,13 @@ public class AuthenticationController {
         this.usersService = usersService;
     }
 
-    @GetMapping("/login2")
+    @GetMapping("/login")
     public String showAuthenticationPage(@ModelAttribute("user") User user) {
         Authentication authentication = SecurityContextHolder
                 .getContext().getAuthentication();
         if (authentication == null ||
                 authentication instanceof AnonymousAuthenticationToken) {
-            return "login2";
+            return "login";
         }
 
         return "redirect:/";
