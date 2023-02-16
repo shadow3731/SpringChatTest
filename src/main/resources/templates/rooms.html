@@ -32,7 +32,7 @@
                   id="chatNewMessageField"
                   th:method="post"
                   th:action="@{/chats/${roomId}}"
-                  th:object="${chat}">
+                  th:object="${room}">
                 <textarea class="chat_text_field"
                           placeholder="Print a message"
                           th:field="*{message}"

@@ -28,7 +28,7 @@ public class User {
     @Size(min = 6,
             max = 50,
             message = "Password must be between 3 and 30 symbols")
-    private char[] password;
+    private byte[] password;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id")
@@ -37,7 +37,7 @@ public class User {
     public User(int id,
                 String nickname, @Size(min = 6,
             max = 50,
-            message = "Password must be between 3 and 30 symbols") char[] password,
+            message = "Password must be between 3 and 30 symbols") byte[] password,
                 Authority authority) {
         this.id = id;
         this.nickname = nickname;

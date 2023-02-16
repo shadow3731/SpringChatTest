@@ -1,7 +1,7 @@
 package local.chat.springchattest.controller;
 
-import local.chat.springchattest.entity.Chat;
-import local.chat.springchattest.service.chats.ChatsService;
+import local.chat.springchattest.entity.Room;
+import local.chat.springchattest.service.chats.RoomsService;
 import local.chat.springchattest.service.users.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,15 +12,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 @Controller
-public class ChatController {
+public class RoomController {
 
     private final UsersService usersService;
-    private final ChatsService chatsService;
+    private final RoomsService roomsService;
 
-    public ChatController(@Autowired UsersService usersService,
-                          @Autowired ChatsService chatsService) {
+    public RoomController(@Autowired UsersService usersService,
+                          @Autowired RoomsService roomsService) {
         this.usersService = usersService;
-        this.chatsService = chatsService;
+        this.roomsService = roomsService;
     }
 
     @GetMapping("/rooms/{id}")
@@ -29,18 +29,18 @@ public class ChatController {
         model.addAttribute("roomId",
                 "Chat room " + id);
         model.addAttribute("messages",
-                chatsService.getAllMessagesFromRoom(id));
-        model.addAttribute("chat", new Chat());
+                roomsService.getAllMessagesFromRoom(id));
+        model.addAttribute("chat", new Room());
         return "rooms";
     }
 
     @PostMapping("/rooms/{id}")
     public String addMessage(@PathVariable("id") int id,
-                           @ModelAttribute Chat chat,
+                           @ModelAttribute Room room,
                            BindingResult bindingResult) {
-        chat.setRoomId(id);
-        chat.setTimestamp(new Date());
-        chatsService.saveMessage(chat);
+        room.setRoomId(id);
+        room.setTimestamp(new Date());
+        roomsService.saveMessage(room);
         return "redirect:/rooms/" + id;
     }
 

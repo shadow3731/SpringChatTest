@@ -8,11 +8,11 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
-@Table(name = "chats")
+@Table(name = "rooms")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Chat {
+public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,7 +32,7 @@ public class Chat {
     @Column(name = "message")
     private String message;
 
-    public Chat(int id, int roomId, User user, Date timestamp, String message) {
+    public Room(int id, int roomId, User user, Date timestamp, String message) {
         this.id = id;
         this.roomId = roomId;
         this.user = user;
