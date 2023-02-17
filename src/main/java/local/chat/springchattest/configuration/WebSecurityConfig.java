@@ -40,15 +40,11 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
         http
-                .headers()
-                .frameOptions()
-                .sameOrigin()
-                .and()
                 .authorizeHttpRequests()
                 .requestMatchers("/", "/login")
                 .permitAll()
-                .anyRequest()
-                .authenticated()
+                .requestMatchers(HttpMethod.POST, "login2")
+                .permitAll()
                 .and()
                 .formLogin(form -> form
                         .loginPage("/login")

@@ -28,16 +28,15 @@ public class User {
     @Size(min = 6,
             max = 50,
             message = "Password must be between 3 and 30 symbols")
-    private byte[] password;
+    private String password;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id")
     private Authority authority;
 
     public User(int id,
-                String nickname, @Size(min = 6,
-            max = 50,
-            message = "Password must be between 3 and 30 symbols") byte[] password,
+                String nickname,
+                String password,
                 Authority authority) {
         this.id = id;
         this.nickname = nickname;

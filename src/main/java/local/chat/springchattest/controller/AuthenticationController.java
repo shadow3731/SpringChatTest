@@ -40,12 +40,12 @@ public class AuthenticationController {
         return "login";
     }
 
-    @PostMapping("login2")
-    public String checkAuthentication(@ModelAttribute("user") @Valid User user,
-                                      BindingResult bindingResult,
-                                      Model model) {
+    @RequestMapping("login2")
+    public void checkAuthentication (@ModelAttribute("user") @Valid User user,
+                                    BindingResult bindingResult,
+                                    Model model) throws Exception {
         System.out.println("post running");
-        if (bindingResult.hasErrors()) {
+        /*if (bindingResult.hasErrors()) {
             System.out.println("done");
             return "login";
         }
@@ -56,10 +56,10 @@ public class AuthenticationController {
                         Arrays.toString(DBUser.getPassword()))) {
             model.addAttribute("badCredentials",
                     "Bad credentials");
-        }*/
+        }
 
         user.setPassword(null);
-        return "redirect:/";
+        return "redirect:/";*/
     }
 
     @ModelAttribute
