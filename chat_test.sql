@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 16, 2023 at 09:27 PM
+-- Generation Time: Feb 17, 2023 at 11:09 PM
 -- Server version: 8.0.19
 -- PHP Version: 7.1.33
 
@@ -72,10 +72,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nickname`, `password`, `authority_id`) VALUES
-(1, 'admin', '$2y$10$y39ZW/GIPTgDZICngsjBB.rk9FtUbTt.N7IMFi3tq7bG2kuEVD5si', 2),
-(2, 'System', 'QW!M!&r!JLjeEan#Ear7Lb#^pyS3Bg%9PS^92#Z$zqa8A3A2Na', 2),
-(3, 'Java Developer', '$2y$10$y39ZW/GIPTgDZICngsjBB.rk9FtUbTt.N7IMFi3tq7bG2kuEVD5si', 1),
-(4, 'Sam', '$2y$10$y39ZW/GIPTgDZICngsjBB.rk9FtUbTt.N7IMFi3tq7bG2kuEVD5si', 1);
+(1, 'admin', '123123', 2),
+(2, 'System', '111111', 2),
+(3, 'Java Developer', '123123', 1),
+(4, 'Sam', '123123', 1);
 
 --
 -- Indexes for dumped tables

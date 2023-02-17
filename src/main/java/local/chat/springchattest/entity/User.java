@@ -31,7 +31,7 @@ public class User {
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "authority_id")
     private Authority authority;
 
     public User(int id,

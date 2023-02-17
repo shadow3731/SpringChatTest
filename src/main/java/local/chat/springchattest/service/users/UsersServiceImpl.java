@@ -2,12 +2,14 @@ package local.chat.springchattest.service.users;
 
 import local.chat.springchattest.repository.UsersRepository;
 import local.chat.springchattest.entity.User;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@NoArgsConstructor
 public class UsersServiceImpl implements UsersService {
 
     private UsersRepository usersRepository;

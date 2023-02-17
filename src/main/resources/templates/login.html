@@ -21,12 +21,10 @@
               th:action="@{/login}"
               th:object="${user}">
 
-            <!--div class="login_form_error"
-                 th:if="${#fields.hasErrors('nickname')} and
-                    ${#fields.hasErrors('password')}"
-                 th:errors="*{nickname} + '\n' + *{password}"
+            <div class="login_form_error"
+                 th:unless="${badCredentials == null}"
                  th:text="${badCredentials}">
-            </div-->
+            </div>
             <div class="login_form_error"
                  th:if="${#fields.hasErrors('nickname')}"
                  th:errors="*{nickname}">

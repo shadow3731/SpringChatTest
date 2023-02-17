@@ -7,8 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import java.util.Date;
-
 @Controller
 public class IndexController {
 
@@ -20,21 +18,27 @@ public class IndexController {
 
     @GetMapping("/")
     public String showIndexPage() {
-        return "index";
+        if (CommonModel.isThisUserAuthenticated()) {
+            return "index";
+        } else {
+            return "redirect:/login";
+        }
     }
 
     @GetMapping("/users")
     public String showUsersPage(Model model) {
-        model.addAttribute("users",
-                usersService.getAllUsers());
-        return "users";
+        if (CommonModel.isThisUserAuthenticated()) {
+            model.addAttribute("users",
+                    usersService.getAllUsers());
+            return "users";
+        } else {
+            return "redirect:/login";
+        }
+
     }
 
     @ModelAttribute
     public void addCommonInfo(Model model) {
-        model.addAttribute("totalUsers",
-                usersService.countAllUsers());
-        model.addAttribute("serverDateTime",
-                new Date());
+        model.addAllAttributes(CommonModel.getCommonModels());
     }
 }
