@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <title>Sign in</title>
     <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/login.css}" type="text/css">
@@ -16,34 +17,36 @@
 
     <div class="container">
         <form class="login_form"
-              th:method="POST"
-              th:action="@{/login2}"
+              method="POST"
+              th:action="@{/login}"
               th:object="${user}">
-            <!--input type="hidden"
-                   name="_csrf"
-                   value="60ca1842-7fba-4b95-9188-04a50a2d21c0" /-->
+
             <!--div class="login_form_error"
                  th:if="${#fields.hasErrors('nickname')} and
                     ${#fields.hasErrors('password')}"
                  th:errors="*{nickname} + '\n' + *{password}"
                  th:text="${badCredentials}">
             </div-->
-            <!--div class="login_form_error"
+            <div class="login_form_error"
                  th:if="${#fields.hasErrors('nickname')}"
                  th:errors="*{nickname}">
-            </div-->
+            </div>
+            <div class="login_form_error"
+                 th:if="${#fields.hasErrors('password')}"
+                 th:errors="*{password}">
+            </div>
             <label class="login_form_label"
                    for="nickname">Enter nickname</label>
             <input class="login_form_input"
                    type="text"
                    th:field="*{nickname}"
                    id="nickname">
-            <!--label class="login_form_label"
+            <label class="login_form_label"
                    for="password">Enter password</label>
             <input class="login_form_input"
                    type="password"
                    th:field="*{password}"
-                   id="password"-->
+                   id="password">
             <input class="login_form_submit"
                    type="submit"
                    value="Sign in">

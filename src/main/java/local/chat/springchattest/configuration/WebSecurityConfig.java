@@ -1,4 +1,4 @@
-package local.chat.springchattest.configuration;
+/*package local.chat.springchattest.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -6,6 +6,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRepository;
+import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
 @Configuration
 @EnableWebSecurity
@@ -36,22 +39,29 @@ public class WebSecurityConfig {
         return http.build();
     }*/
 
-    @Bean
+/*import org.springframework.context.annotation.Bean;
+
+@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http)
             throws Exception {
         http
+                .csrf()
+                .csrfTokenRepository(CookieCsrfTokenRepository
+                        .withHttpOnlyFalse())
+                .and()
                 .authorizeHttpRequests()
-                .requestMatchers("/", "/login")
+                .requestMatchers("/js/**", "/", "/login")
                 .permitAll()
-                .requestMatchers(HttpMethod.POST, "login2")
+                .requestMatchers(HttpMethod.POST, "/login2")
                 .permitAll()
                 .and()
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login2")
                         .defaultSuccessUrl("/", true)
-                        .failureForwardUrl("/login?error=true"));
+                        .failureForwardUrl("/login?error=true")
+                );
         return http.build();
     }
 
-}
+}*/
