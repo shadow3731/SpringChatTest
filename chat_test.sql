@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 18, 2023 at 12:42 PM
+-- Generation Time: Feb 18, 2023 at 04:48 PM
 -- Server version: 8.0.19
 -- PHP Version: 7.1.33
 
@@ -44,10 +44,10 @@ INSERT INTO `authorities` (`id`, `codename`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `rooms`
+-- Table structure for table `messages`
 --
 
-CREATE TABLE `rooms` (
+CREATE TABLE `messages` (
   `id` int NOT NULL,
   `room_id` int DEFAULT NULL,
   `nickname_id` int NOT NULL,
@@ -110,7 +110,7 @@ ALTER TABLE `authorities`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

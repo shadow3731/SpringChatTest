@@ -7,7 +7,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <title th:text="${roomId}"></title>
+    <title th:text="'Chat room '+${roomId}"></title>
     <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/rooms.css}" type="text/css">
 </head>
@@ -16,33 +16,43 @@
     <div th:insert="~{common :: commonHeader}"></div>
 
     <script defer src="/js/containerResize.js" type="text/javascript"></script>
+    <script defer src="/js/textAreaListen.js" type="text/javascript"></script>
     <div class="container" id="specificContainer">
         <div class="chat_room">
             <table class="chat_room_table">
-                <tbody th:each="message : ${messages}">
+                <tbody th:each="mess : ${messages}">
                     <tr class="chat_message">
                         <td class="chat_message_info"
-                            th:text="${message.getUser().getNickname() +
-                                '\n' + message.getTimestamp()}"></td>
+                            th:text="${mess.getUser().getNickname() +
+                                '\n' + mess.getTimestamp()}"></td>
                         <td class="chat_message_text"
-                            th:text="${message.getMessage()}"></td>
+                            th:text="${mess.getMessage()}"></td>
                     </tr>
                 </tbody>
             </table>
             <form class="chat_room_send_field"
                   id="chatNewMessageField"
-                  th:method="post"
-                  th:action="@{/chats/${roomId}}"
-                  th:object="${room}">
+                  method="POST"
+                  th:action="@{/rooms/__${roomId}__/messages}"
+                  th:object="${newMessage}">
                 <textarea class="chat_text_field"
+                          id="chatTextField"
                           placeholder="Print a message"
                           th:field="*{message}"
                           form="chatNewMessageField"></textarea>
                 <input class="chat_send_message_button"
+                       id="messageSendButton"
                        type="submit"
                        value="Send message">
             </form>
-            <div class="chat_room_next_page"></div>
+            <div class="chat_room_interface">
+                <div class="chat_room_symbols_counter"
+                     id="symbolsCounter">Symbols:
+                    <span class="symbols_value"
+                          id="symbolsCounterValue">0</span>/ 1500
+                </div>
+            </div>
+            <div class="chat_room_other_pages"></div>
         </div>
     </div>
 

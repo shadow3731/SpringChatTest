@@ -1,6 +1,7 @@
 package local.chat.springchattest.controller;
 
 import local.chat.springchattest.entity.User;
+import local.chat.springchattest.service.users.UsersService;
 
 import java.util.Date;
 import java.util.HashMap;

@@ -1,6 +1,7 @@
 package local.chat.springchattest.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,12 +20,14 @@ public class User {
     private int id;
 
     @Column(name = "nickname")
+    @NotBlank
     @Size(min = 3,
             max = 30,
             message = "Nickname must be between 3 and 30 symbols")
     private String nickname;
 
     @Column(name = "password")
+    @NotBlank
     @Size(min = 6,
             max = 50,
             message = "Password must be between 6 and 50 symbols")

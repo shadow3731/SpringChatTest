@@ -1,12 +1,12 @@
 package local.chat.springchattest.service.chats;
 
-import local.chat.springchattest.entity.Room;
+import local.chat.springchattest.entity.Message;
 
 import java.util.List;
 
 public interface RoomsService {
 
-    List<Room> getAllMessagesFromRoom(int roomId);
+    List<Message> getAllMessagesFromRoom(int roomId);
 
-    void saveMessage(Room room);
+    void saveMessage(Message message);
 }

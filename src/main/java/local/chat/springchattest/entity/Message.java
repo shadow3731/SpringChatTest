@@ -1,6 +1,8 @@
 package local.chat.springchattest.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,11 +10,11 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
-@Table(name = "rooms")
+@Table(name = "messages")
 @NoArgsConstructor
 @Getter
 @Setter
-public class Room {
+public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +32,13 @@ public class Room {
     private Date timestamp;
 
     @Column(name = "message")
+    @NotBlank
+    @Size(min = 2,
+            max = 1500,
+            message = "Message must be between 2 and 1500 symbols in length")
     private String message;
 
-    public Room(int id, int roomId, User user, Date timestamp, String message) {
+    public Message(int id, int roomId, User user, Date timestamp, String message) {
         this.id = id;
         this.roomId = roomId;
         this.user = user;
