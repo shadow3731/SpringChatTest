@@ -8,5 +8,7 @@ public interface RoomsService {
 
     List<Message> getAllMessagesFromRoom(int roomId);
 
+    int countAllMessages();
+
     void saveMessage(Message message);
 }

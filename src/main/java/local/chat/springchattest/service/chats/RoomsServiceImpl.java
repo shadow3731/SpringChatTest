@@ -22,6 +22,11 @@ public class RoomsServiceImpl implements RoomsService {
     }
 
     @Override
+    public int countAllMessages() {
+        return (int) roomsRepository.count();
+    }
+
+    @Override
     public void saveMessage(Message message) {
         roomsRepository.save(message);
     }

@@ -57,12 +57,14 @@ public class RoomController {
                 return "rooms";
             }
 
+            message.setId(roomsService.countAllMessages() + 1);
             message.setRoomId(roomId);
             message.setTimestamp(new Date());
 
             User user = (User) CommonModel.getCommonModels().get("user");
             message.setUser(usersService.getUserById(user.getId()));
 
+            System.out.println(message);
             roomsService.saveMessage(message);
             return "redirect:/rooms/" + roomId + "/messages";
         } else {

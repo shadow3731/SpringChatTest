@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 18, 2023 at 04:48 PM
+-- Generation Time: Feb 18, 2023 at 11:25 PM
 -- Server version: 8.0.19
 -- PHP Version: 7.1.33
 
@@ -29,9 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `authorities` (
   `id` int NOT NULL,
-  `codename` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `codename` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `authorities`
@@ -39,7 +39,7 @@ CREATE TABLE `authorities` (
 
 INSERT INTO `authorities` (`id`, `codename`, `name`) VALUES
 (1, 'REGULAR', 'User'),
-(2, 'ADMINISTRATOR', 'Administrator');
+(2, 'ADMIN', 'Administrator');
 
 -- --------------------------------------------------------
 
@@ -53,7 +53,35 @@ CREATE TABLE `messages` (
   `nickname_id` int NOT NULL,
   `timestamp` datetime DEFAULT NULL,
   `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `room_id`, `nickname_id`, `timestamp`, `message`) VALUES
+(1, 1, 1, '2023-02-18 20:17:17', 'qwerty'),
+(2, 1, 1, '2023-02-18 20:17:41', 'Feel free to chat here)'),
+(3, 2, 1, '2023-02-18 20:17:59', 'This room is also opened)'),
+(4, 2, 5, '2023-02-18 20:18:17', 'yeah!!!!!!!!!!'),
+(5, 1, 4, '2023-02-18 20:18:50', 'Yes, we will)');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages_seq`
+--
+
+CREATE TABLE `messages_seq` (
+  `next_val` bigint DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `messages_seq`
+--
+
+INSERT INTO `messages_seq` (`next_val`) VALUES
+(1);
 
 -- --------------------------------------------------------
 
@@ -64,9 +92,9 @@ CREATE TABLE `messages` (
 CREATE TABLE `users` (
   `id` int NOT NULL,
   `nickname` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `authority_id` int DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `authority_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
@@ -90,6 +118,13 @@ ALTER TABLE `authorities`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `nickname_id` (`nickname_id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -107,14 +142,26 @@ ALTER TABLE `authorities`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `messages`
+--
+ALTER TABLE `messages`
+  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`nickname_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `users`

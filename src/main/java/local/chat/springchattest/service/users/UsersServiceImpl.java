@@ -26,7 +26,7 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public int countAllUsers() {
-        return usersRepository.findAll().size();
+        return (int) usersRepository.count();
     }
 
     @Override
