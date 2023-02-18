@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class RoomsServiceImpl implements RoomsService {
 
-    private RoomsRepository roomsRepository;
+    private final RoomsRepository roomsRepository;
 
     public RoomsServiceImpl(@Autowired RoomsRepository roomsRepository) {
         this.roomsRepository = roomsRepository;

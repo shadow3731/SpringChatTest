@@ -56,6 +56,7 @@ public class AuthenticationController {
                 return "login";
             }
 
+            user.setId(DBUser.getId());
             user.setAuthority(DBUser.getAuthority());
 
             Map<String, Object> modelsMap = CommonModel.getCommonModels();
@@ -94,6 +95,7 @@ public class AuthenticationController {
 
             user.setAuthority(authoritiesService.getAuthorityById(1));
             usersService.saveUser(user);
+            user.setId(usersService.getUserByNickname(user.getNickname()).getId());
 
             Map<String, Object> modelsMap = CommonModel.getCommonModels();
             modelsMap.replace("user", user);

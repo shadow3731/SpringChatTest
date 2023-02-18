@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import local.chat.springchattest.entity.Message;
 import local.chat.springchattest.entity.User;
 import local.chat.springchattest.service.chats.RoomsService;
+import local.chat.springchattest.service.users.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,10 +17,16 @@ import java.util.Date;
 public class RoomController {
 
     private RoomsService roomsService;
+    private UsersService usersService;
 
     @Autowired
     public void setRoomsService(RoomsService roomsService) {
         this.roomsService = roomsService;
+    }
+
+    @Autowired
+    public void setUsersService(UsersService usersService) {
+        this.usersService = usersService;
     }
 
     @GetMapping("/rooms/{id}/messages")
@@ -51,8 +58,11 @@ public class RoomController {
             }
 
             message.setRoomId(roomId);
-            message.setUser((User) CommonModel.getCommonModels().get("user"));
             message.setTimestamp(new Date());
+
+            User user = (User) CommonModel.getCommonModels().get("user");
+            message.setUser(usersService.getUserById(user.getId()));
+
             roomsService.saveMessage(message);
             return "redirect:/rooms/" + roomId + "/messages";
         } else {

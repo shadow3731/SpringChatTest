@@ -20,15 +20,15 @@
     <div class="container" id="specificContainer">
         <div class="chat_room">
             <table class="chat_room_table">
-                <tbody th:each="mess : ${messages}">
-                    <tr class="chat_message">
-                        <td class="chat_message_info"
-                            th:text="${mess.getUser().getNickname() +
-                                '\n' + mess.getTimestamp()}"></td>
-                        <td class="chat_message_text"
-                            th:text="${mess.getMessage()}"></td>
-                    </tr>
-                </tbody>
+                <tr class="chat_message"
+                    th:each="mess : ${messages}">
+                    <td class="chat_message_info">
+                        <span th:text="${mess.getUser().getNickname()}"></span>
+                        <span th:text="${#dates.format(mess.getTimestamp(),
+                            'dd/MM/yyyy HH:mm')}"></span></td>
+                    <td class="chat_message_text"
+                        th:text="${mess.getMessage()}"></td>
+                </tr>
             </table>
             <form class="chat_room_send_field"
                   id="chatNewMessageField"
