@@ -39,16 +39,29 @@ body {
     justify-content: flex-start;
 }
 
-.header_left_button {
-    margin-left: 4%;
+.header_right {
+    justify-content: flex-end;
+}
+
+.header_left_button, .header_right_button {
     background-color: #000000;
     border: solid 1px #ffffff;
     border-radius: 6px;
 }
 
-.header_left_button_href {
+.header_left_button {
+    margin-left: 4%;
+}
+
+.header_right_button {
+    margin-right: 4%;
+}
+
+.header_left_button_href, .header_right_button_href {
     font-family: cursive;
+    font-size: 1.2vw;
     color: #ffffff;
+    vertical-align: middle;
     text-decoration: none;
 }
 
@@ -148,7 +161,7 @@ body {
     border-radius: 10px;
 }
 
-.chat_room1_enter_href {
+.chat_room1_enter_href, .chat_room2_enter_href {
     display: block;
     width: 100%;
     height: 100%;
@@ -157,7 +170,7 @@ body {
     opacity: 70%;
 }
 
-.chat_room1_enter_href:hover {
+.chat_room1_enter_href:hover, .chat_room2_enter_href:hover {
     opacity: 100%;
 }
 

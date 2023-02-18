@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/html"
+      xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <title>Sign up</title>
+    <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/authentication.css}" type="text/css">
+</head>
+<body>
+
+<div th:insert="~{common :: commonHeader}"></div>
+
+<div class="container">
+    <div class="auth">
+        <form class="auth_form"
+              method="POST"
+              th:action="@{/register}"
+              th:object="${user}">
+
+            <div class="auth_form_error"
+                 th:unless="${existingUser == null}"
+                 th:text="${existingUser}">
+            </div>
+
+            <div th:insert="~{common :: commonAuthenticationForm}"></div>
+
+            <input class="auth_form_submit"
+                   type="submit"
+                   value="Sign up">
+        </form>
+        <div class="auth_redirect">
+            <div class="auth_redirect_title">Already registered?</div>
+            <a class="auth_redirect_link"
+               th:href="@{/login}">Sign in</a>
+        </div>
+    </div>
+</div>
+
+<div th:insert="~{common :: commonFooter}"></div>
+
+</body>
+</html>

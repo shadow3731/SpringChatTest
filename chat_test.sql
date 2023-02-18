@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 17, 2023 at 11:09 PM
+-- Generation Time: Feb 18, 2023 at 12:42 PM
 -- Server version: 8.0.19
 -- PHP Version: 7.1.33
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `authorities` (
   `id` int NOT NULL,
+  `codename` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -36,9 +37,9 @@ CREATE TABLE `authorities` (
 -- Dumping data for table `authorities`
 --
 
-INSERT INTO `authorities` (`id`, `name`) VALUES
-(1, 'REGULAR'),
-(2, 'ADMINISTRATOR');
+INSERT INTO `authorities` (`id`, `codename`, `name`) VALUES
+(1, 'REGULAR', 'User'),
+(2, 'ADMINISTRATOR', 'Administrator');
 
 -- --------------------------------------------------------
 
@@ -64,7 +65,7 @@ CREATE TABLE `users` (
   `id` int NOT NULL,
   `nickname` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `password` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `authority_id` int DEFAULT NULL
+  `authority_id` int DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -75,7 +76,8 @@ INSERT INTO `users` (`id`, `nickname`, `password`, `authority_id`) VALUES
 (1, 'admin', '123123', 2),
 (2, 'System', '111111', 2),
 (3, 'Java Developer', '123123', 1),
-(4, 'Sam', '123123', 1);
+(4, 'Sam', '123123', 1),
+(5, 'Hollywood Undead', '123123', 1);
 
 --
 -- Indexes for dumped tables
@@ -108,7 +110,7 @@ ALTER TABLE `authorities`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables

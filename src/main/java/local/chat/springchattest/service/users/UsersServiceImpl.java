@@ -15,7 +15,7 @@ public class UsersServiceImpl implements UsersService {
     private UsersRepository usersRepository;
 
     @Autowired
-    public void setUsersDAO(UsersRepository usersRepository) {
+    public void setUsersRepository(UsersRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
 
@@ -37,5 +37,10 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public User getUserByNickname(String nickname) {
         return usersRepository.findByNickname(nickname).orElse(null);
+    }
+
+    @Override
+    public void saveUser(User user) {
+        usersRepository.save(user);
     }
 }

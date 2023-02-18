@@ -14,5 +14,5 @@ public interface UsersService {
 
     User getUserByNickname(String nickname);
 
-    //boolean saveUser(User user);
+    void saveUser(User user);
 }

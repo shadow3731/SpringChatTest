@@ -27,7 +27,7 @@ public class User {
     @Column(name = "password")
     @Size(min = 6,
             max = 50,
-            message = "Password must be between 3 and 30 symbols")
+            message = "Password must be between 6 and 50 symbols")
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL)

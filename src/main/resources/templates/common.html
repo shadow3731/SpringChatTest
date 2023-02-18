@@ -10,9 +10,45 @@
                    th:href="@{/}">Main page</a>
             </button>
         </div>
-        <div class="header_center">Welcome to the room!</div>
-        <div class="header_right"></div>
+        <div class="header_center">
+             <span th:if="${user.getNickname() == null}"
+                  th:text="'Welcome to the chat!'"></span>
+             <span th:unless="${user.getNickname() == null}"
+              th:text="'Welcome to the chat, '
+                    + ${user.getNickname()} + '!'"></span>
+        </div>
+        <div class="header_right">
+            <button class="header_right_button"
+                    type="button">
+                <a class="header_right_button_href"
+                   th:href="@{/logout}">Logout</a>
+            </button>
+        </div>
     </header>
+
+    <div class="auth_form_inner"
+         th:fragment="commonAuthenticationForm">
+        <div class="auth_form_error"
+             th:if="${#fields.hasErrors('nickname')}"
+             th:errors="*{nickname}">
+        </div>
+        <div class="auth_form_error"
+             th:if="${#fields.hasErrors('password')}"
+             th:errors="*{password}">
+        </div>
+        <label class="auth_form_label"
+               for="nickname">Enter nickname</label>
+        <input class="auth_form_input"
+               type="text"
+               th:field="*{nickname}"
+               id="nickname">
+        <label class="auth_form_label"
+               for="password">Enter password</label>
+        <input class="auth_form_input"
+               type="password"
+               th:field="*{password}"
+               id="password">
+    </div>
 
     <footer class="footer"
             id="footer"

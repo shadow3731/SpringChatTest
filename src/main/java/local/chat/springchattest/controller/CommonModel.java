@@ -30,9 +30,13 @@ public class CommonModel {
     }
 
     static int getThisUserIdAuthority() {
-        User user = (User) modelsMap.get("user");
-        Optional<Integer> authorityId = Optional
-                .of(user.getAuthority().getId());
-        return authorityId.orElse(0);
+        if (isThisUserAuthenticated()) {
+            User user = (User) modelsMap.get("user");
+            Optional<Integer> authorityId = Optional
+                    .of(user.getAuthority().getId());
+            return authorityId.get();
+        } else {
+            return 0;
+        }
     }
 }

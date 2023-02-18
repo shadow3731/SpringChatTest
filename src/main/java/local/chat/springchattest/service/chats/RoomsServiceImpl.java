@@ -12,8 +12,7 @@ public class RoomsServiceImpl implements RoomsService {
 
     private RoomsRepository roomsRepository;
 
-    @Autowired
-    public void setChatsDAO(RoomsRepository roomsRepository) {
+    public RoomsServiceImpl(@Autowired RoomsRepository roomsRepository) {
         this.roomsRepository = roomsRepository;
     }
 

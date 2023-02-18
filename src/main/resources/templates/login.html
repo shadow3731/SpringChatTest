@@ -9,46 +9,36 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <title>Sign in</title>
     <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/login.css}" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/authentication.css}" type="text/css">
 </head>
 <body>
 
     <div th:insert="~{common :: commonHeader}"></div>
 
     <div class="container">
-        <form class="login_form"
-              method="POST"
-              th:action="@{/login}"
-              th:object="${user}">
+        <div class="auth">
+            <form class="auth_form"
+                  method="POST"
+                  th:action="@{/login}"
+                  th:object="${user}">
 
-            <div class="login_form_error"
-                 th:unless="${badCredentials == null}"
-                 th:text="${badCredentials}">
+                <div class="auth_form_error"
+                     th:unless="${badCredentials == null}"
+                     th:text="${badCredentials}">
+                </div>
+
+                <div th:insert="~{common :: commonAuthenticationForm}"></div>
+
+                <input class="auth_form_submit"
+                       type="submit"
+                       value="Sign in">
+            </form>
+            <div class="auth_redirect">
+                <div class="auth_redirect_title">Still not registered?</div>
+                <a class="auth_redirect_link"
+                   th:href="@{/register}">Sign up</a>
             </div>
-            <div class="login_form_error"
-                 th:if="${#fields.hasErrors('nickname')}"
-                 th:errors="*{nickname}">
-            </div>
-            <div class="login_form_error"
-                 th:if="${#fields.hasErrors('password')}"
-                 th:errors="*{password}">
-            </div>
-            <label class="login_form_label"
-                   for="nickname">Enter nickname</label>
-            <input class="login_form_input"
-                   type="text"
-                   th:field="*{nickname}"
-                   id="nickname">
-            <label class="login_form_label"
-                   for="password">Enter password</label>
-            <input class="login_form_input"
-                   type="password"
-                   th:field="*{password}"
-                   id="password">
-            <input class="login_form_submit"
-                   type="submit"
-                   value="Sign in">
-        </form>
+        </div>
     </div>
 
     <div th:insert="~{common :: commonFooter}"></div>
