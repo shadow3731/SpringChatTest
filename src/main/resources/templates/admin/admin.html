@@ -9,14 +9,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <title>Administrator room</title>
     <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
-    <link rel="stylesheet" th:href="@{/css/admin.css}" type="text/css">
 </head>
 <body>
 
     <div th:insert="~{common :: commonHeader}"></div>
 
     <div class="container">
-        successful
+        <div class="admin_menu">
+            <button class="logging_room_enter"
+                    type="button">
+                <a class="logging_room_enter_href"
+                   th:href="@{/admin/logs}">Show site logging</a>
+            </button>
+        </div>
     </div>
 
     <div th:insert="~{common :: commonFooter}"></div>

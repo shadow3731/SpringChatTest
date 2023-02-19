@@ -9,13 +9,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 public class AdminController {
 
     @GetMapping("/admin")
-    public String getAdminRoomPage() {
+    public String showAdminRoomPage() {
         if (CommonModel.isThisUserAuthenticated() &&
                 CommonModel.getThisUserIdAuthority() > 1) {
-            return "admin";
+            return "admin/admin";
         } else {
             return "redirect:/";
         }
+    }
+
+    @GetMapping("/admin/logs")
+    public String showLogsPage() {
+        return "/admin/logs";
     }
 
     @ModelAttribute

@@ -34,7 +34,7 @@ public class AuthenticationController {
         if (CommonModel.isThisUserAuthenticated()) {
             return "redirect:/";
         } else {
-            return "login";
+            return "authentication/login";
         }
     }
 
@@ -44,7 +44,7 @@ public class AuthenticationController {
                                       Model model) {
         if (!CommonModel.isThisUserAuthenticated()) {
             if (bindingResult.hasErrors()) {
-                return "login";
+                return "authentication/login";
             }
 
             User DBUser = usersService.getUserByNickname(user.getNickname());
@@ -53,7 +53,7 @@ public class AuthenticationController {
                     !Objects.equals(user.getPassword(), DBUser.getPassword())) {
                 model.addAttribute("badCredentials",
                         "Bad credentials");
-                return "login";
+                return "authentication/login";
             }
 
             user.setId(DBUser.getId());
@@ -73,7 +73,7 @@ public class AuthenticationController {
         if (CommonModel.isThisUserAuthenticated()) {
             return "redirect:/";
         } else {
-            return "register";
+            return "authentication/register";
         }
     }
 
@@ -83,14 +83,14 @@ public class AuthenticationController {
                                     Model model) {
         if (!CommonModel.isThisUserAuthenticated()) {
             if (bindingResult.hasErrors()) {
-                return "register";
+                return "authentication/register";
             }
 
             User DBUser = usersService.getUserByNickname(user.getNickname());
             if (DBUser != null) {
                 model.addAttribute("existingUser",
                         "This user already exists");
-                return "register";
+                return "authentication/register";
             }
 
             user.setAuthority(authoritiesService.getAuthorityById(1));

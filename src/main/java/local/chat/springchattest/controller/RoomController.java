@@ -35,9 +35,9 @@ public class RoomController {
         if (CommonModel.isThisUserAuthenticated()) {
             model.addAttribute("roomId", roomId);
             model.addAttribute("messages",
-                    roomsService.getAllMessagesFromRoom(roomId));
+                    roomsService.getAllNotDeletedMessagesFromRoom(roomId, false));
             model.addAttribute("newMessage", new Message());
-            return "rooms";
+            return "rooms/rooms";
         } else {
             return "redirect:/login";
         }
@@ -52,14 +52,15 @@ public class RoomController {
             if (bindingResult.hasErrors()) {
                 model.addAttribute("roomId", roomId);
                 model.addAttribute("messages",
-                        roomsService.getAllMessagesFromRoom(roomId));
+                        roomsService.getAllNotDeletedMessagesFromRoom(roomId, false));
                 model.addAttribute("newMessage", new Message());
-                return "rooms";
+                return "rooms/rooms";
             }
 
             message.setId(roomsService.countAllMessages() + 1);
             message.setRoomId(roomId);
             message.setTimestamp(new Date());
+            message.setDeleted(false);
 
             User user = (User) CommonModel.getCommonModels().get("user");
             message.setUser(usersService.getUserById(user.getId()));

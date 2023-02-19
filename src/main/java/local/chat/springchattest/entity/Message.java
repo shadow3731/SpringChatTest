@@ -30,6 +30,9 @@ public class Message {
     @Column(name = "timestamp")
     private Date timestamp;
 
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
+
     @Column(name = "message")
     @NotBlank
     @Size(min = 2,
@@ -37,21 +40,23 @@ public class Message {
             message = "Message must be between 2 and 1500 symbols in length")
     private String message;
 
-    public Message(int id, int roomId, User user, Date timestamp, String message) {
+    public Message(int id, int roomId, User user, Date timestamp, String message, boolean isDeleted) {
         this.id = id;
         this.roomId = roomId;
         this.user = user;
         this.timestamp = timestamp;
         this.message = message;
+        this.isDeleted = isDeleted;
     }
 
     @Override
     public String toString() {
-        return "Chat{" +
+        return "Message{" +
                 "id=" + id +
                 ", roomId=" + roomId +
                 ", user=" + user +
                 ", timestamp=" + timestamp +
+                ", isDeleted=" + isDeleted +
                 ", message='" + message + '\'' +
                 '}';
     }

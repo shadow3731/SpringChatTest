@@ -17,8 +17,8 @@ public class RoomsServiceImpl implements RoomsService {
     }
 
     @Override
-    public List<Message> getAllMessagesFromRoom(int roomId) {
-        return roomsRepository.findAllByRoomId(roomId);
+    public List<Message> getAllNotDeletedMessagesFromRoom(int roomId, boolean isDeleted) {
+        return roomsRepository.findAllByRoomIdAndDeletedEquals(roomId, isDeleted);
     }
 
     @Override

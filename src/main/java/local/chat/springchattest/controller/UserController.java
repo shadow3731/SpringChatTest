@@ -22,7 +22,7 @@ public class UserController {
         if (CommonModel.isThisUserAuthenticated()) {
             model.addAttribute("users",
                     usersService.getAllUsers());
-            return "users";
+            return "users/users";
         } else {
             return "redirect:/login";
         }

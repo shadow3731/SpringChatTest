@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface RoomsService {
 
-    List<Message> getAllMessagesFromRoom(int roomId);
+    List<Message> getAllNotDeletedMessagesFromRoom(int roomId, boolean isDeleted);
 
     int countAllMessages();
 
