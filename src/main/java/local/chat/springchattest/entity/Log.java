@@ -17,7 +17,7 @@ public class Log {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private long id;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
@@ -32,7 +32,7 @@ public class Log {
     @Column(name = "description")
     private String actionDescription;
 
-    public Log(int id, User user, Date timestamp, String actionName, String actionDescription) {
+    public Log(long id, User user, Date timestamp, String actionName, String actionDescription) {
         this.id = id;
         this.user = user;
         this.timestamp = timestamp;

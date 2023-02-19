@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 18, 2023 at 11:25 PM
+-- Generation Time: Feb 19, 2023 at 05:42 PM
 -- Server version: 8.0.19
 -- PHP Version: 7.1.33
 
@@ -44,6 +44,20 @@ INSERT INTO `authorities` (`id`, `codename`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `logs`
+--
+
+CREATE TABLE `logs` (
+  `id` bigint NOT NULL,
+  `user_id` int NOT NULL,
+  `timestamp` datetime DEFAULT NULL,
+  `action` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `messages`
 --
 
@@ -52,19 +66,20 @@ CREATE TABLE `messages` (
   `room_id` int DEFAULT NULL,
   `nickname_id` int NOT NULL,
   `timestamp` datetime DEFAULT NULL,
-  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `is_deleted` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `messages`
 --
 
-INSERT INTO `messages` (`id`, `room_id`, `nickname_id`, `timestamp`, `message`) VALUES
-(1, 1, 1, '2023-02-18 20:17:17', 'qwerty'),
-(2, 1, 1, '2023-02-18 20:17:41', 'Feel free to chat here)'),
-(3, 2, 1, '2023-02-18 20:17:59', 'This room is also opened)'),
-(4, 2, 5, '2023-02-18 20:18:17', 'yeah!!!!!!!!!!'),
-(5, 1, 4, '2023-02-18 20:18:50', 'Yes, we will)');
+INSERT INTO `messages` (`id`, `room_id`, `nickname_id`, `timestamp`, `message`, `is_deleted`) VALUES
+(1, 1, 1, '2023-02-18 20:17:17', 'qwerty', 0),
+(2, 1, 1, '2023-02-18 20:17:41', 'Feel free to chat here)', 0),
+(3, 2, 1, '2023-02-18 20:17:59', 'This room is also opened)', 0),
+(4, 2, 5, '2023-02-18 20:18:17', 'yeah!!!!!!!!!!', 0),
+(5, 1, 4, '2023-02-18 20:18:50', 'Yes, we will)', 0);
 
 -- --------------------------------------------------------
 
@@ -118,6 +133,13 @@ ALTER TABLE `authorities`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `logs`
+--
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Indexes for table `messages`
 --
 ALTER TABLE `messages`
@@ -142,6 +164,12 @@ ALTER TABLE `authorities`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `logs`
+--
+ALTER TABLE `logs`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
@@ -156,6 +184,12 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `logs`
+--
+ALTER TABLE `logs`
+  ADD CONSTRAINT `logs_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `messages`

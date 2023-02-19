@@ -7,7 +7,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <title>Administrator room</title>
+    <title>Site log</title>
     <link rel="stylesheet" th:href="@{/css/index.css}" type="text/css">
     <link rel="stylesheet" th:href="@{/css/logs.css}" type="text/css">
 </head>
@@ -20,9 +20,50 @@
         <div class="logs_inner">
             <form class="logs_params"
                   method="GET"
-                  th:action="@{/admin/logs/}"
-                  th:object="${newLog}">
-
+                  th:action="@{/admin/logs}">
+                <div class="logs_params_field">
+                    <div class="logs_users_section">
+                        <label class="logs_users_section_id">User ID:
+                            <input class="logs_users_section_id_input"
+                                   type="text"
+                                   th:name="id" />
+                        </label>
+                        <label class="logs_users_section_nick">User nickname:
+                            <input class="logs_users_section_nick_input"
+                                   type="text"
+                                   th:name="nickname" />
+                        </label>
+                        <div class="logs_users_section_remark">
+                            Leave both fields empty to see all users
+                            or choose one of them to see the specific one
+                        </div>
+                    </div>
+                    <div class="logs_dates_section">
+                        <label class="logs_dates_section_from">From:
+                            <input class="logs_dates_section_from_input"
+                                   type="datetime-local"
+                                   th:name="from" />
+                        </label>
+                        <label class="logs_dates_section_till">Till:
+                            <input class="logs_dates_section_till_input"
+                                   type="datetime-local"
+                                   th:name="till" />
+                        </label>
+                        <div class="logs_dates_section_remark">
+                            Leave one field empty to see the period from start/till now
+                            or both ones to see the whole period
+                        </div>
+                    </div>
+                </div>
+                <div class="logs_params_bottom">
+                    <div class="logs_error"
+                         th:unless="${invalidTimestampGap == null}"
+                         th:text="${invalidTimestampGap}">
+                    </div>
+                    <input class="logs_submit"
+                           type="submit"
+                           value="Show logs" />
+                </div>
             </form>
             <table class="logs_list">
                 <thead>
