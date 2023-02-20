@@ -33,15 +33,11 @@ public class RoomController {
     @GetMapping("/rooms/{id}/messages")
     public String showChatPage(@PathVariable("id") int roomId,
                               Model model) {
-        if (AuthenticatedUser.isThisUserAuthenticated()) {
-            model.addAttribute("roomId", roomId);
-            model.addAttribute("messages",
-                    roomsService.getAllNotDeletedMessagesFromRoom(roomId, false));
-            model.addAttribute("newMessage", new Message());
-            return "rooms/rooms";
-        } else {
-            return "redirect:/login";
-        }
+        model.addAttribute("roomId", roomId);
+        model.addAttribute("messages",
+                roomsService.getAllNotDeletedMessagesFromRoom(roomId, false));
+        model.addAttribute("newMessage", new Message());
+        return "rooms/rooms";
     }
 
     @PostMapping("/rooms/{id}/messages")

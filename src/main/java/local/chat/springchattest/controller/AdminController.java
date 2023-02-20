@@ -1,6 +1,5 @@
 package local.chat.springchattest.controller;
 
-import local.chat.springchattest.information.AuthenticatedUser;
 import local.chat.springchattest.service.logs.LogsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,12 +28,7 @@ public class AdminController {
 
     @GetMapping("/admin")
     public String showAdminRoomPage() {
-        if (AuthenticatedUser.isThisUserAuthenticated() &&
-                AuthenticatedUser.getThisUserIdAuthority() > 1) {
-            return "admin/admin";
-        } else {
-            return "redirect:/";
-        }
+        return "admin/admin";
     }
 
     @GetMapping("/admin/logs")
@@ -43,96 +37,91 @@ public class AdminController {
                                @RequestParam(value = "from", required = false) String from,
                                @RequestParam(value = "till", required = false) String till,
                                Model model) throws ParseException {
-        if (AuthenticatedUser.isThisUserAuthenticated() &&
-                AuthenticatedUser.getThisUserIdAuthority() > 1) {
-            if (from != null && till != null &&
-                    !Objects.equals(from, "") &&
-                    !Objects.equals(till, "")) {
-                if (isNegativeTimestampGap(from, till)) {
-                    model.addAttribute("invalidTimestampGap",
-                            "Invalid timestamp gap");
-                    return "admin/logs";
-                }
+        if (from != null && till != null &&
+                !Objects.equals(from, "") &&
+                !Objects.equals(till, "")) {
+            if (isNegativeTimestampGap(from, till)) {
+                model.addAttribute("invalidTimestampGap",
+                        "Invalid timestamp gap");
+                return "admin/logs";
             }
+        }
 
-            if (isBlank(id)) {
-                if (isBlank(nickname)) {
-                    if (isBlank(from)) {
-                        if (isBlank(till)) {
-                            model.addAttribute("logs", logsService.getAllLogs());
-                        } else {
-                            Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
-                            model.addAttribute("logs", logsService.getAllLogsTill(tillDate));
-                        }
+        if (isBlank(id)) {
+            if (isBlank(nickname)) {
+                if (isBlank(from)) {
+                    if (isBlank(till)) {
+                        model.addAttribute("logs", logsService.getAllLogs());
                     } else {
-                        Date fromDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(from.replace("T", " "));
-                        if (isBlank(till)) {
-                            model.addAttribute("logs", logsService.getAllLogsFrom(fromDate));
-                        } else {
-                            Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
-                            model.addAttribute("logs", logsService.getAllLogsBetween(fromDate, tillDate));
-                        }
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
+                        model.addAttribute("logs", logsService.getAllLogsTill(tillDate));
                     }
                 } else {
-                    if (isBlank(from)) {
-                        if (isBlank(till)) {
-                            model.addAttribute("logs", logsService.getAllLogsByUserNickname(nickname));
-                        } else {
-                            Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
-                            model.addAttribute("logs", logsService.getAllLogsByUserNicknameTill(nickname, tillDate));
-                        }
+                    Date fromDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(from.replace("T", " "));
+                    if (isBlank(till)) {
+                        model.addAttribute("logs", logsService.getAllLogsFrom(fromDate));
                     } else {
-                        Date fromDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(from.replace("T", " "));
-                        if (isBlank(till)) {
-                            model.addAttribute("logs", logsService.getAllLogsByUserNicknameFrom(nickname, fromDate));
-                        } else {
-                            Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
-                            model.addAttribute("logs", logsService.getAllLogsByUserNicknameBetween(nickname, fromDate, tillDate));
-                        }
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
+                        model.addAttribute("logs", logsService.getAllLogsBetween(fromDate, tillDate));
                     }
                 }
             } else {
-                if (isBlank(nickname)) {
-                    if (isBlank(from)) {
-                        if (isBlank(till)) {
-                            model.addAttribute("logs", logsService.getAllLogsByUserId(Integer.parseInt(id)));
-                        } else {
-                            Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
-                            model.addAttribute("logs", logsService.getAllLogsByUserIdTill(Integer.parseInt(id), tillDate));
-                        }
+                if (isBlank(from)) {
+                    if (isBlank(till)) {
+                        model.addAttribute("logs", logsService.getAllLogsByUserNickname(nickname));
                     } else {
-                        Date fromDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(from.replace("T", " "));
-                        if (isBlank(till)) {
-                            model.addAttribute("logs", logsService.getAllLogsByUserIdFrom(Integer.parseInt(id), fromDate));
-                        } else {
-                            Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
-                            model.addAttribute("logs", logsService.getAllLogsByUserIdBetween(Integer.parseInt(id), fromDate, tillDate));
-                        }
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
+                        model.addAttribute("logs", logsService.getAllLogsByUserNicknameTill(nickname, tillDate));
                     }
                 } else {
-                    if (isBlank(from)) {
-                        if (isBlank(till)) {
-                            model.addAttribute("logs", logsService.getAllLogsByUserIdAndUserNickname(Integer.parseInt(id), nickname));
-                        } else {
-                            Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
-                            model.addAttribute("logs", logsService.getAllLogsByUserIdAndUserNicknameTill(Integer.parseInt(id), nickname, tillDate));
-                        }
+                    Date fromDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(from.replace("T", " "));
+                    if (isBlank(till)) {
+                        model.addAttribute("logs", logsService.getAllLogsByUserNicknameFrom(nickname, fromDate));
                     } else {
-                        Date fromDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(from.replace("T", " "));
-                        if (isBlank(till)) {
-                            model.addAttribute("logs", logsService.getAllLogsByUserIdAndUserNicknameFrom(Integer.parseInt(id), nickname, fromDate));
-                        } else {
-                            Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
-                            model.addAttribute("logs", logsService.getAllLogsByUserIdAndUserNicknameBetween(Integer.parseInt(id), nickname, fromDate, tillDate));
-                        }
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
+                        model.addAttribute("logs", logsService.getAllLogsByUserNicknameBetween(nickname, fromDate, tillDate));
                     }
                 }
             }
-
-            return "admin/logs";
         } else {
-            return "redirect:/";
+            if (isBlank(nickname)) {
+                if (isBlank(from)) {
+                    if (isBlank(till)) {
+                        model.addAttribute("logs", logsService.getAllLogsByUserId(Integer.parseInt(id)));
+                    } else {
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
+                        model.addAttribute("logs", logsService.getAllLogsByUserIdTill(Integer.parseInt(id), tillDate));
+                    }
+                } else {
+                    Date fromDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(from.replace("T", " "));
+                    if (isBlank(till)) {
+                        model.addAttribute("logs", logsService.getAllLogsByUserIdFrom(Integer.parseInt(id), fromDate));
+                    } else {
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
+                        model.addAttribute("logs", logsService.getAllLogsByUserIdBetween(Integer.parseInt(id), fromDate, tillDate));
+                    }
+                }
+            } else {
+                if (isBlank(from)) {
+                    if (isBlank(till)) {
+                        model.addAttribute("logs", logsService.getAllLogsByUserIdAndUserNickname(Integer.parseInt(id), nickname));
+                    } else {
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
+                        model.addAttribute("logs", logsService.getAllLogsByUserIdAndUserNicknameTill(Integer.parseInt(id), nickname, tillDate));
+                    }
+                } else {
+                    Date fromDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(from.replace("T", " "));
+                    if (isBlank(till)) {
+                        model.addAttribute("logs", logsService.getAllLogsByUserIdAndUserNicknameFrom(Integer.parseInt(id), nickname, fromDate));
+                    } else {
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(till.replace("T", " "));
+                        model.addAttribute("logs", logsService.getAllLogsByUserIdAndUserNicknameBetween(Integer.parseInt(id), nickname, fromDate, tillDate));
+                    }
+                }
+            }
         }
+
+        return "admin/logs";
     }
 
     @ModelAttribute

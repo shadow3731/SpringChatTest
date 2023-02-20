@@ -32,11 +32,7 @@ public class AuthenticationController {
 
     @GetMapping("/login")
     public String showAuthenticationPage() {
-        if (AuthenticatedUser.isThisUserAuthenticated()) {
-            return "redirect:/";
-        } else {
-            return "authentication/login";
-        }
+        return "authentication/login";
     }
 
     @PostMapping("/login")
@@ -64,18 +60,16 @@ public class AuthenticationController {
             modelsMap.replace("user", user);
             modelsMap.put("totalUsers", usersService.countAllUsers());
             CommonModel.setCommonModels(modelsMap);
-        }
 
-        return "redirect:/";
+            return "redirect:/";
+        } else {
+            return "authentication/login";
+        }
     }
 
     @GetMapping("/register")
     public String showRegistrationPage() {
-        if (AuthenticatedUser.isThisUserAuthenticated()) {
-            return "redirect:/";
-        } else {
-            return "authentication/register";
-        }
+        return "authentication/register";
     }
 
     @PostMapping("/register")
@@ -102,9 +96,11 @@ public class AuthenticationController {
             modelsMap.replace("user", user);
             modelsMap.put("totalUsers", usersService.countAllUsers());
             CommonModel.setCommonModels(modelsMap);
-        }
 
-        return "redirect:/";
+            return "redirect:/";
+        } else {
+            return "authentication/register";
+        }
     }
 
     @GetMapping("/logout")

@@ -55,7 +55,7 @@ public class LoggingAspect {
     private void allMethodsFromControllersExceptAuthenticationController() {}
 
     @Before("allMethodsFromControllersExceptAuthenticationController()")
-    public void beforeAdvice(JoinPoint joinPoint) {
+    public void beforeLoggerAdvice(JoinPoint joinPoint) {
         if (AuthenticatedUser.isThisUserAuthenticated()) {
             MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
             Object[] arguments = joinPoint.getArgs();
@@ -70,6 +70,11 @@ public class LoggingAspect {
                 case "showIndexPage" -> {
                     log.setActionName("Enter to a page");
                     log.setActionDescription("Enter to page with url GET:/");
+                } case "showAuthenticationPage" -> {
+                    if (AuthenticatedUser.isThisUserAuthenticated()) {
+                        log.setActionName("Redirect from an inaccessible page");
+                        log.setActionDescription("Redirect to default page");
+                    }
                 } case "showLogoutPage" -> {
                     log.setActionName("Enter to a page");
                     log.setActionDescription("Enter to page with url GET:/logout");

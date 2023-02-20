@@ -1,6 +1,5 @@
 package local.chat.springchattest.controller;
 
-import local.chat.springchattest.information.AuthenticatedUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +10,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String showIndexPage() {
-        if (AuthenticatedUser.isThisUserAuthenticated()) {
-            return "index";
-        } else {
-            return "redirect:/login";
-        }
+        return "index";
     }
 
     @ModelAttribute
