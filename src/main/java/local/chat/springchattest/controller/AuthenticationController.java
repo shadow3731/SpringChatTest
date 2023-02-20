@@ -40,7 +40,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public String checkAuthentication(@ModelAttribute("user") @Valid User user,
+    public String addAuthentication(@ModelAttribute("user") @Valid User user,
                                       BindingResult bindingResult,
                                       Model model) {
         if (!AuthenticatedUser.isThisUserAuthenticated()) {
@@ -79,7 +79,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public String checkRegistration(@ModelAttribute("user") @Valid User user,
+    public String addRegistration(@ModelAttribute("user") @Valid User user,
                                     BindingResult bindingResult,
                                     Model model) {
         if (!AuthenticatedUser.isThisUserAuthenticated()) {
@@ -108,7 +108,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/logout")
-    public String logout() {
+    public String showLogoutPage() {
         Map<String, Object> modelsMap = CommonModel.getCommonModels();
         modelsMap.replace("user", new User());
         modelsMap.remove("totalUsers");
@@ -117,7 +117,7 @@ public class AuthenticationController {
     }
 
     @ModelAttribute
-    public void addCommonInfo(Model model) {
+    public void getCommonInfo(Model model) {
         model.addAllAttributes(CommonModel.getCommonModels());
     }
 }

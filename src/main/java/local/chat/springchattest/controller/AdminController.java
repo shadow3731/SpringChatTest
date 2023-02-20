@@ -136,7 +136,7 @@ public class AdminController {
     }
 
     @ModelAttribute
-    public void addCommonInfo(Model model) {
+    public void getCommonInfo(Model model) {
         model.addAllAttributes(CommonModel.getCommonModels());
     }
 

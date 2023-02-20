@@ -75,7 +75,7 @@ public class RoomController {
     }
 
     @ModelAttribute
-    public void addCommonInfo(Model model) {
+    public void getCommonInfo(Model model) {
         model.addAllAttributes(CommonModel.getCommonModels());
     }
 }
