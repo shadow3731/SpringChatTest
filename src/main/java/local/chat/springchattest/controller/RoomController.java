@@ -66,7 +66,6 @@ public class RoomController {
             User user = (User) CommonModel.getCommonModels().get("user");
             message.setUser(usersService.getUserById(user.getId()));
 
-            System.out.println(message);
             roomsService.saveMessage(message);
             return "redirect:/rooms/" + roomId + "/messages";
         } else {
