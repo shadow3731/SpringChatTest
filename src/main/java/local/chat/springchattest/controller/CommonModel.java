@@ -1,12 +1,10 @@
 package local.chat.springchattest.controller;
 
 import local.chat.springchattest.entity.User;
-import local.chat.springchattest.service.users.UsersService;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 public class CommonModel {
 
@@ -17,27 +15,11 @@ public class CommonModel {
         modelsMap.put("serverDateTime", new Date());
     }
 
-    static Map<String, Object> getCommonModels() {
+    public static Map<String, Object> getCommonModels() {
         return modelsMap;
     }
 
-    static void setCommonModels(Map<String, Object> newModelsMap) {
+    public static void setCommonModels(Map<String, Object> newModelsMap) {
         modelsMap = newModelsMap;
-    }
-
-    static boolean isThisUserAuthenticated() {
-        User user = (User) modelsMap.get("user");
-        return user.getAuthority() != null;
-    }
-
-    static int getThisUserIdAuthority() {
-        if (isThisUserAuthenticated()) {
-            User user = (User) modelsMap.get("user");
-            Optional<Integer> authorityId = Optional
-                    .of(user.getAuthority().getId());
-            return authorityId.get();
-        } else {
-            return 0;
-        }
     }
 }

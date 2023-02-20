@@ -2,6 +2,7 @@ package local.chat.springchattest.controller;
 
 import jakarta.validation.Valid;
 import local.chat.springchattest.entity.User;
+import local.chat.springchattest.information.AuthenticatedUser;
 import local.chat.springchattest.service.authorities.AuthoritiesService;
 import local.chat.springchattest.service.users.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class AuthenticationController {
 
     @GetMapping("/login")
     public String showAuthenticationPage() {
-        if (CommonModel.isThisUserAuthenticated()) {
+        if (AuthenticatedUser.isThisUserAuthenticated()) {
             return "redirect:/";
         } else {
             return "authentication/login";
@@ -42,7 +43,7 @@ public class AuthenticationController {
     public String checkAuthentication(@ModelAttribute("user") @Valid User user,
                                       BindingResult bindingResult,
                                       Model model) {
-        if (!CommonModel.isThisUserAuthenticated()) {
+        if (!AuthenticatedUser.isThisUserAuthenticated()) {
             if (bindingResult.hasErrors()) {
                 return "authentication/login";
             }
@@ -70,7 +71,7 @@ public class AuthenticationController {
 
     @GetMapping("/register")
     public String showRegistrationPage() {
-        if (CommonModel.isThisUserAuthenticated()) {
+        if (AuthenticatedUser.isThisUserAuthenticated()) {
             return "redirect:/";
         } else {
             return "authentication/register";
@@ -81,7 +82,7 @@ public class AuthenticationController {
     public String checkRegistration(@ModelAttribute("user") @Valid User user,
                                     BindingResult bindingResult,
                                     Model model) {
-        if (!CommonModel.isThisUserAuthenticated()) {
+        if (!AuthenticatedUser.isThisUserAuthenticated()) {
             if (bindingResult.hasErrors()) {
                 return "authentication/register";
             }

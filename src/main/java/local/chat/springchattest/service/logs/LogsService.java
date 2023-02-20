@@ -38,4 +38,6 @@ public interface LogsService {
     List<Log> getAllLogsByUserIdAndUserNicknameTill(int id, String nickname, Date till);
 
     List<Log> getAllLogsByUserIdAndUserNicknameBetween(int id, String nickname, Date from, Date till);
+
+    void saveLog(Log log);
 }

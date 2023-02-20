@@ -95,10 +95,17 @@
     font-size: .8vw;
 }
 
-.table_head {
+.table_head, .table_row {
     width: 100%;
-    text-align: center;
     display: flex;
+}
+
+.table_head {
+    text-align: center;
+}
+
+.table_row {
+    text-align: start;
 }
 
 .table_cell_id {

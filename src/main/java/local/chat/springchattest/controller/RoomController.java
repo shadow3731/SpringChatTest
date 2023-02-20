@@ -3,6 +3,7 @@ package local.chat.springchattest.controller;
 import jakarta.validation.Valid;
 import local.chat.springchattest.entity.Message;
 import local.chat.springchattest.entity.User;
+import local.chat.springchattest.information.AuthenticatedUser;
 import local.chat.springchattest.service.chats.RoomsService;
 import local.chat.springchattest.service.users.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class RoomController {
     @GetMapping("/rooms/{id}/messages")
     public String showChatPage(@PathVariable("id") int roomId,
                               Model model) {
-        if (CommonModel.isThisUserAuthenticated()) {
+        if (AuthenticatedUser.isThisUserAuthenticated()) {
             model.addAttribute("roomId", roomId);
             model.addAttribute("messages",
                     roomsService.getAllNotDeletedMessagesFromRoom(roomId, false));
@@ -48,7 +49,7 @@ public class RoomController {
                              @ModelAttribute("newMessage") @Valid Message message,
                              BindingResult bindingResult,
                              Model model) {
-        if (CommonModel.isThisUserAuthenticated()) {
+        if (AuthenticatedUser.isThisUserAuthenticated()) {
             if (bindingResult.hasErrors()) {
                 model.addAttribute("roomId", roomId);
                 model.addAttribute("messages",

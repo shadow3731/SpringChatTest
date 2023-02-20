@@ -85,7 +85,8 @@
                         <td class="table_cell_auth"
                             th:text="${log.getUser().getAuthority().getCodename()}"></td>
                         <td class="table_cell_timestamp"
-                            th:text="${log.getTimestamp()}"></td>
+                            th:text="${#dates.format(log.getTimestamp(),
+                                'dd/MM/yyyy HH:mm:ss')}"></td>
                         <td class="table_cell_action"
                             th:text="${log.getActionName()}"></td>
                         <td class="table_cell_description"

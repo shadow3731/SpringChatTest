@@ -10,11 +10,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String showIndexPage() {
-        if (CommonModel.isThisUserAuthenticated()) {
-            return "index";
-        } else {
-            return "redirect:/login";
-        }
+        return "index";
     }
 
     @ModelAttribute

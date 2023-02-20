@@ -24,7 +24,7 @@ public class Message {
     private int roomId;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "nickname_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Column(name = "timestamp")

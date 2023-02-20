@@ -98,4 +98,9 @@ public class LogsServiceImpl implements LogsService {
     public List<Log> getAllLogsByUserIdAndUserNicknameBetween(int id, String nickname, Date from, Date till) {
         return logsRepository.findAllByUser_IdAndUser_NicknameAndTimestampBetween(id, nickname, from, till);
     }
+
+    @Override
+    public void saveLog(Log log) {
+        logsRepository.save(log);
+    }
 }
