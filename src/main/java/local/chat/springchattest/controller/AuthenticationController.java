@@ -3,6 +3,7 @@ package local.chat.springchattest.controller;
 import jakarta.validation.Valid;
 import local.chat.springchattest.entity.User;
 import local.chat.springchattest.information.AuthenticatedUser;
+import local.chat.springchattest.operation.EncryptionUtils;
 import local.chat.springchattest.service.authorities.AuthoritiesService;
 import local.chat.springchattest.service.users.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
@@ -38,22 +40,26 @@ public class AuthenticationController {
     @PostMapping("/login")
     public String addAuthentication(@ModelAttribute("user") @Valid User user,
                                       BindingResult bindingResult,
-                                      Model model) {
+                                      Model model)
+            throws Exception {
         if (!AuthenticatedUser.isThisUserAuthenticated()) {
             if (bindingResult.hasErrors()) {
                 return "authentication/login";
             }
 
             User DBUser = usersService.getUserByNickname(user.getNickname());
+
             if (DBUser == null ||
                     !Objects.equals(user.getNickname(), DBUser.getNickname()) ||
-                    !Objects.equals(user.getPassword(), DBUser.getPassword())) {
+                    !Arrays.equals(EncryptionUtils.encrypt(user.getPassword()),
+                            DBUser.getPassword())) {
                 model.addAttribute("badCredentials",
                         "Bad credentials");
                 return "authentication/login";
             }
 
             user.setId(DBUser.getId());
+            user.setPassword(null);
             user.setAuthority(DBUser.getAuthority());
 
             Map<String, Object> modelsMap = CommonModel.getCommonModels();
@@ -75,7 +81,8 @@ public class AuthenticationController {
     @PostMapping("/register")
     public String addRegistration(@ModelAttribute("user") @Valid User user,
                                     BindingResult bindingResult,
-                                    Model model) {
+                                    Model model)
+            throws Exception {
         if (!AuthenticatedUser.isThisUserAuthenticated()) {
             if (bindingResult.hasErrors()) {
                 return "authentication/register";
@@ -88,9 +95,11 @@ public class AuthenticationController {
                 return "authentication/register";
             }
 
+            user.setPassword(EncryptionUtils.encrypt(user.getPassword()));
             user.setAuthority(authoritiesService.getAuthorityById(1));
             usersService.saveUser(user);
             user.setId(usersService.getUserByNickname(user.getNickname()).getId());
+            user.setPassword(null);
 
             Map<String, Object> modelsMap = CommonModel.getCommonModels();
             modelsMap.replace("user", user);

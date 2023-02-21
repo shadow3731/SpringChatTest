@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.nio.file.attribute.UserPrincipal;
+
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
@@ -27,24 +29,27 @@ public class User {
     private String nickname;
 
     @Column(name = "password")
-    @NotBlank(message = "Password can't be blank")
     @Size(min = 6,
             max = 50,
             message = "Password must be between 6 and 50 symbols")
-    private String password;
+    private byte[] password;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "authority_id")
     private Authority authority;
 
-    public User(int id,
-                String nickname,
-                String password,
-                Authority authority) {
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_details_id")
+    private UserDetails userDetails;
+
+    public User(int id, String nickname, @Size(min = 6,
+            max = 50,
+            message = "Password must be between 6 and 50 symbols") byte[] password, Authority authority, UserDetails userDetails) {
         this.id = id;
         this.nickname = nickname;
         this.password = password;
         this.authority = authority;
+        this.userDetails = userDetails;
     }
 
     @Override
@@ -53,6 +58,7 @@ public class User {
                 "id=" + id +
                 ", nickname='" + nickname + '\'' +
                 ", authority=" + authority +
+                ", userDetails=" + userDetails +
                 '}';
     }
 }
