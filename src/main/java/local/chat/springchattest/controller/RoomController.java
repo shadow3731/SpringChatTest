@@ -80,16 +80,24 @@ public class RoomController {
         return "/rooms/edit";
     }
 
-    /*@PatchMapping("/rooms/{roomId}/messages/{messageId}")
+    @PostMapping("/rooms/{roomId}/messages/{id}")
     public String editMessage(@PathVariable("roomId") int roomId,
-                              @PathVariable("messageId") int id,
-                              @ModelAttribute("thisMessage") @Valid Message message) {
+                              @PathVariable("id") int id,
+                              @ModelAttribute("thisMessage") @Valid Message message,
+                              BindingResult bindingResult) {
         if (AuthenticatedUser.isThisUserAuthenticated()) {
+            if (bindingResult.hasErrors()) {
+                return "redirect:/rooms/" + roomId + "/messages/" + id;
+            }
 
+            Message DBMessage = roomsService.getMessageById(id);
+            DBMessage.setMessage(message.getMessage());
+            roomsService.saveMessage(DBMessage);
+            return "redirect:/rooms/" + roomId + "/messages";
         } else {
-            return "redirect:/login"
+            return "redirect:/login";
         }
-    }*/
+    }
 
     @ModelAttribute
     public void getCommonInfo(Model model) {

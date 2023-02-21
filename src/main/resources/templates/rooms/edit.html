@@ -21,8 +21,8 @@
             <div class="chat_room_title">Edit message</div>
             <form class="chat_room_send_field"
                   id="chatThisMessageField"
-                  th:method="PATCH"
-                  th:action="@{/rooms/__${roomId}__/messages/__${thisMessage.getId()}}"
+                  th:method="POST"
+                  th:action="@{/rooms/__${roomId}__/messages/__${thisMessage.getId()}__}"
                   th:object="${thisMessage}">
                 <textarea class="chat_text_field"
                           id="chatTextField"

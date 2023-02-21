@@ -5,6 +5,7 @@ import local.chat.springchattest.entity.Log;
 import local.chat.springchattest.entity.Message;
 import local.chat.springchattest.entity.User;
 import local.chat.springchattest.information.AuthenticatedUser;
+import local.chat.springchattest.service.chats.RoomsService;
 import local.chat.springchattest.service.logs.LogsService;
 import local.chat.springchattest.service.users.UsersService;
 import org.aspectj.lang.JoinPoint;
@@ -26,6 +27,8 @@ public class LoggingAspect {
     private LogsService logsService;
     private UsersService usersService;
 
+    private RoomsService roomsService;
+
     @Autowired
     public void setLogsService(LogsService logsService) {
         this.logsService = logsService;
@@ -36,11 +39,19 @@ public class LoggingAspect {
         this.usersService = usersService;
     }
 
+    @Autowired
+    public void setRoomsService(RoomsService roomsService) {
+        this.roomsService = roomsService;
+    }
+
     @Pointcut("execution(public * local.chat.springchattest.controller.*.show*(..))")
     private void allShowMethodsFromControllers() {}
 
     @Pointcut("execution(public * local.chat.springchattest.controller.*.add*(..))")
     private void allAddMethodsFromControllers() {}
+
+    @Pointcut("execution(public * local.chat.springchattest.controller.*.edit*(..))")
+    private void allEditMethodsFromControllers() {}
 
     @Pointcut("execution(public * local.chat.springchattest.controller.AuthenticationController.*(..))")
     private void allShowMethodsFromAuthenticationController() {}
@@ -49,7 +60,8 @@ public class LoggingAspect {
     private void showLogoutPageMethodFromAuthenticationController() {}
 
     @Pointcut("allShowMethodsFromControllers() || " +
-            "allAddMethodsFromControllers() && " +
+            "allAddMethodsFromControllers() || " +
+            "allEditMethodsFromControllers() && " +
             "(!allShowMethodsFromAuthenticationController() || " +
             "showLogoutPageMethodFromAuthenticationController())")
     private void allMethodsFromControllersExceptAuthenticationController() {}
@@ -90,6 +102,13 @@ public class LoggingAspect {
                 } case "showEditMessagePage" -> {
                     log.setActionName("Enter to a page");
                     log.setActionDescription("Enter to page with url GET:/rooms/" +
+                            arguments[0] + "/messages/" + arguments[1]);
+                } case "editMessage" -> {
+                    Message oldMessage = roomsService.getMessageById((int) arguments[1]);
+                    message = (Message) arguments[2];
+                    log.setActionName("Edit a message");
+                    log.setActionDescription("Edit message [" + oldMessage.getMessage() +
+                            "] to [" + message.getMessage() + "] with url POST:/rooms/" +
                             arguments[0] + "/messages/" + arguments[1]);
                 } case "showAdminRoomPage" -> {
                     log.setActionName("Enter to a page");

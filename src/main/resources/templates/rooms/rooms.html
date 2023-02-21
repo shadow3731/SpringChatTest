@@ -51,7 +51,7 @@
             </table>
             <form class="chat_room_send_field"
                   id="chatNewMessageField"
-                  method="POST"
+                  th:method="POST"
                   th:action="@{/rooms/__${roomId}__/messages}"
                   th:object="${newMessage}">
                 <textarea class="chat_text_field"
