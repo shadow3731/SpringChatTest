@@ -30,28 +30,25 @@ public class RoomController {
         this.usersService = usersService;
     }
 
-    @GetMapping("/rooms/{id}/messages")
-    public String showChatPage(@PathVariable("id") int roomId,
+    @GetMapping("/rooms/{roomId}/messages")
+    public String showChatPage(@PathVariable("roomId") int roomId,
                               Model model) {
         model.addAttribute("roomId", roomId);
         model.addAttribute("messages",
                 roomsService.getAllNotDeletedMessagesFromRoom(roomId, false));
         model.addAttribute("newMessage", new Message());
+        model.addAttribute("user",
+                CommonModel.getCommonModels().get("user"));
         return "rooms/rooms";
     }
 
-    @PostMapping("/rooms/{id}/messages")
-    public String addMessage(@PathVariable("id") int roomId,
+    @PostMapping("/rooms/{roomId}/messages")
+    public String addMessage(@PathVariable("roomId") int roomId,
                              @ModelAttribute("newMessage") @Valid Message message,
-                             BindingResult bindingResult,
-                             Model model) {
+                             BindingResult bindingResult) {
         if (AuthenticatedUser.isThisUserAuthenticated()) {
             if (bindingResult.hasErrors()) {
-                model.addAttribute("roomId", roomId);
-                model.addAttribute("messages",
-                        roomsService.getAllNotDeletedMessagesFromRoom(roomId, false));
-                model.addAttribute("newMessage", new Message());
-                return "rooms/rooms";
+                return "redirect:/rooms/" + roomId + "/messages";
             }
 
             message.setId(roomsService.countAllMessages() + 1);
@@ -68,6 +65,31 @@ public class RoomController {
             return "redirect:/login";
         }
     }
+
+    @GetMapping("/rooms/{roomId}/messages/{id}")
+    public String showEditMessagePage(@PathVariable("roomId") int roomId,
+                                      @PathVariable("id") int id,
+                                      Model model) {
+        Message message = roomsService.getMessageById(id);
+        if (message != null) {
+            model.addAttribute("thisMessage", message);
+        } else {
+            return "redirect:/rooms/" + roomId + "/messages";
+        }
+
+        return "/rooms/edit";
+    }
+
+    /*@PatchMapping("/rooms/{roomId}/messages/{messageId}")
+    public String editMessage(@PathVariable("roomId") int roomId,
+                              @PathVariable("messageId") int id,
+                              @ModelAttribute("thisMessage") @Valid Message message) {
+        if (AuthenticatedUser.isThisUserAuthenticated()) {
+
+        } else {
+            return "redirect:/login"
+        }
+    }*/
 
     @ModelAttribute
     public void getCommonInfo(Model model) {

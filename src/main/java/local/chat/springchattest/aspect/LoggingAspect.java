@@ -87,6 +87,10 @@ public class LoggingAspect {
                     log.setActionName("Add a message");
                     log.setActionDescription("Add message [" + message.getMessage() +
                             "] with url POST:/rooms/" + arguments[0] + "/messages");
+                } case "showEditMessagePage" -> {
+                    log.setActionName("Enter to a page");
+                    log.setActionDescription("Enter to page with url GET:/rooms/" +
+                            arguments[0] + "/messages/" + arguments[1]);
                 } case "showAdminRoomPage" -> {
                     log.setActionName("Enter to a page");
                     log.setActionDescription("Enter to page with url GET:/admin");

@@ -34,7 +34,7 @@ public class Message {
     private boolean isDeleted;
 
     @Column(name = "message")
-    @NotBlank
+    @NotBlank(message = "Message can't be blank")
     @Size(min = 2,
             max = 1500,
             message = "Message must be between 2 and 1500 symbols in length")

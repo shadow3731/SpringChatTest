@@ -20,14 +20,14 @@ public class User {
     private int id;
 
     @Column(name = "nickname")
-    @NotBlank
+    @NotBlank(message = "Nickname can't be blank")
     @Size(min = 3,
             max = 30,
             message = "Nickname must be between 3 and 30 symbols")
     private String nickname;
 
     @Column(name = "password")
-    @NotBlank
+    @NotBlank(message = "Password can't be blank")
     @Size(min = 6,
             max = 50,
             message = "Password must be between 6 and 50 symbols")

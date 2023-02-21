@@ -21,7 +21,6 @@ public class LogsServiceImpl implements LogsService {
 
     @Override
     public List<Log> getAllLogs() {
-        System.out.println("done");
         return logsRepository.findAll();
     }
 
@@ -104,4 +103,5 @@ public class LogsServiceImpl implements LogsService {
     public void saveLog(Log log) {
         logsRepository.save(log);
     }
+
 }

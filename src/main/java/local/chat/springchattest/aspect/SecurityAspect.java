@@ -17,11 +17,7 @@ public class SecurityAspect {
     @Pointcut("execution(public * local.chat.springchattest.controller.*.show*(..))")
     private void allShowMethodsFromControllers() {}
 
-    @Pointcut("execution(public * local.chat.springchattest.controller.*.add*(..))")
-    private void allAddMethodsFromControllers() {}
-
-    @Around("allShowMethodsFromControllers() || " +
-            "allAddMethodsFromControllers()")
+    @Around("allShowMethodsFromControllers()")
     public String afterReturningSecurityAdvice(ProceedingJoinPoint proceedingJoinPoint)
             throws Throwable {
         MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint
@@ -36,7 +32,7 @@ public class SecurityAspect {
 
         switch (methodSignature.getName()) {
             case "showIndexPage", "showChatPage",
-                    "showUsersPage" -> {
+                    "showEditMessagePage", "showUsersPage" -> {
                 if (!AuthenticatedUser.isThisUserAuthenticated()) {
                     pageName = "redirect:/login";
                 }

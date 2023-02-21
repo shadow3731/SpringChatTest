@@ -3,7 +3,13 @@ let button = document.getElementById("messageSendButton");
 let counterField = document.getElementById("symbolsCounter");
 let counterFieldValue = document.getElementById("symbolsCounterValue");
 
-textarea.addEventListener('input', () => {
+changeCounterValue();
+
+textarea.addEventListener("input", () => {
+    changeCounterValue();
+});
+
+function changeCounterValue() {
     if (textarea.value.length > 1500) {
         button.style.opacity = "50%"
         button.style.pointerEvents = "none";
@@ -19,4 +25,4 @@ textarea.addEventListener('input', () => {
     }
 
     counterFieldValue.innerText = textarea.value.length;
-});
+}

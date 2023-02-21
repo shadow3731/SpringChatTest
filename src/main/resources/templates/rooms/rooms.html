@@ -28,6 +28,25 @@
                             'dd/MM/yyyy HH:mm')}"></span></td>
                     <td class="chat_message_text"
                         th:text="${mess.getMessage()}"></td>
+                    <td class="chat_message_functions">
+                        <form class="chat_message_form"
+                              th:method="GET"
+                              th:action="@{/rooms/__${roomId}__/messages/__${mess.getId()}__}">
+                            <input class="chat_edit_message_button"
+                                   id="messageEditButton"
+                                   type="submit"
+                                   value="Edit">
+                        </form>
+                        <form class="chat_message_form"
+                              th:method="DELETE"
+                              th:object="${thisMessage}"
+                              th:if="${user.getAuthority().getId() > 1}">
+                            <input class="chat_edit_message_button"
+                                   id="messageDeleteButton"
+                                   type="submit"
+                                   value="Delete">
+                        </form>
+                    </td>
                 </tr>
             </table>
             <form class="chat_room_send_field"
