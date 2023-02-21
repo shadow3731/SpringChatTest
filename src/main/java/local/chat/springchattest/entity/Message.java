@@ -33,6 +33,9 @@ public class Message {
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
+    @Transient
+    private long editDeadlineMills;
+
     @Column(name = "message")
     @NotBlank(message = "Message can't be blank")
     @Size(min = 2,

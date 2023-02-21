@@ -53,6 +53,9 @@ public class LoggingAspect {
     @Pointcut("execution(public * local.chat.springchattest.controller.*.edit*(..))")
     private void allEditMethodsFromControllers() {}
 
+    @Pointcut("execution(public * local.chat.springchattest.controller.*.delete*(..))")
+    private void allDeleteMethodsFromControllers() {}
+
     @Pointcut("execution(public * local.chat.springchattest.controller.AuthenticationController.*(..))")
     private void allShowMethodsFromAuthenticationController() {}
 
@@ -61,7 +64,8 @@ public class LoggingAspect {
 
     @Pointcut("allShowMethodsFromControllers() || " +
             "allAddMethodsFromControllers() || " +
-            "allEditMethodsFromControllers() && " +
+            "allEditMethodsFromControllers() || " +
+            "allDeleteMethodsFromControllers() && " +
             "(!allShowMethodsFromAuthenticationController() || " +
             "showLogoutPageMethodFromAuthenticationController())")
     private void allMethodsFromControllersExceptAuthenticationController() {}
@@ -110,6 +114,12 @@ public class LoggingAspect {
                     log.setActionDescription("Edit message [" + oldMessage.getMessage() +
                             "] to [" + message.getMessage() + "] with url POST:/rooms/" +
                             arguments[0] + "/messages/" + arguments[1]);
+                } case "deleteMessage" -> {
+                    message = (Message) arguments[1];
+                    log.setActionName("Delete a message");
+                    log.setActionDescription("Delete message [" + message.getMessage() +
+                            "] with url POST:/rooms/" + arguments[0] + "/messages/" +
+                            arguments[1] + "/delete");
                 } case "showAdminRoomPage" -> {
                     log.setActionName("Enter to a page");
                     log.setActionDescription("Enter to page with url GET:/admin");

@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class RoomController {
@@ -33,12 +34,23 @@ public class RoomController {
     @GetMapping("/rooms/{roomId}/messages")
     public String showChatPage(@PathVariable("roomId") int roomId,
                               Model model) {
+        List<Message> messageList = roomsService
+                .getAllNotDeletedMessagesFromRoom(roomId, false);
+        for (Message m : messageList) {
+            m.setEditDeadlineMills(m.
+                    getTimestamp().getTime() + 120000);
+        }
+
+        Date serverDateTime = (Date) CommonModel
+                .getCommonModels().get("serverDateTime");
+
         model.addAttribute("roomId", roomId);
-        model.addAttribute("messages",
-                roomsService.getAllNotDeletedMessagesFromRoom(roomId, false));
+        model.addAttribute("messages", messageList);
         model.addAttribute("newMessage", new Message());
         model.addAttribute("user",
                 CommonModel.getCommonModels().get("user"));
+        model.addAttribute("serverDateTimeInMills",
+                serverDateTime.getTime());
         return "rooms/rooms";
     }
 
@@ -72,6 +84,8 @@ public class RoomController {
                                       Model model) {
         Message message = roomsService.getMessageById(id);
         if (message != null) {
+            message.setEditDeadlineMills(message.
+                    getTimestamp().getTime() + 120000);
             model.addAttribute("thisMessage", message);
         } else {
             return "redirect:/rooms/" + roomId + "/messages";
@@ -93,6 +107,24 @@ public class RoomController {
             Message DBMessage = roomsService.getMessageById(id);
             DBMessage.setMessage(message.getMessage());
             roomsService.saveMessage(DBMessage);
+            return "redirect:/rooms/" + roomId + "/messages";
+        } else {
+            return "redirect:/login";
+        }
+    }
+
+    @PostMapping("/rooms/{roomId}/messages/{id}/delete")
+    public String deleteMessage(@PathVariable("roomId") int roomId,
+                                @PathVariable("id") int id) {
+        User user = (User) CommonModel.getCommonModels().get("user");
+        if (AuthenticatedUser.isThisUserAuthenticated() &&
+                user.getAuthority().getId() > 1) {
+            Message message = roomsService.getMessageById(id);
+            if (message != null) {
+                message.setDeleted(true);
+                roomsService.saveMessage(message);
+            }
+
             return "redirect:/rooms/" + roomId + "/messages";
         } else {
             return "redirect:/login";

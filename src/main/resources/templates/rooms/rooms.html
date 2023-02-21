@@ -25,12 +25,14 @@
                     <td class="chat_message_info">
                         <span th:text="${mess.getUser().getNickname()}"></span>
                         <span th:text="${#dates.format(mess.getTimestamp(),
-                            'dd/MM/yyyy HH:mm')}"></span></td>
+                            'dd/MM/yyyy HH:mm')}"></span>
                     <td class="chat_message_text"
                         th:text="${mess.getMessage()}"></td>
                     <td class="chat_message_functions">
                         <form class="chat_message_form"
                               th:method="GET"
+                              th:if="${user.getId() == mess.getUser().getId()} and
+                                   ${mess.getEditDeadlineMills >= serverDateTimeInMills}"
                               th:action="@{/rooms/__${roomId}__/messages/__${mess.getId()}__}">
                             <input class="chat_edit_message_button"
                                    id="messageEditButton"
@@ -38,9 +40,10 @@
                                    value="Edit">
                         </form>
                         <form class="chat_message_form"
-                              th:method="DELETE"
+                              th:method="POST"
                               th:object="${thisMessage}"
-                              th:if="${user.getAuthority().getId() > 1}">
+                              th:if="${user.getAuthority().getId() > 1}"
+                              th:action="@{/rooms/__${roomId}__/messages/__${mess.getId()}__/delete}">
                             <input class="chat_edit_message_button"
                                    id="messageDeleteButton"
                                    type="submit"
