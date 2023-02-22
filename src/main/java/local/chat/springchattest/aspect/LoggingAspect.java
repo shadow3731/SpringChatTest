@@ -5,6 +5,7 @@ import local.chat.springchattest.entity.Log;
 import local.chat.springchattest.entity.Message;
 import local.chat.springchattest.entity.User;
 import local.chat.springchattest.information.AuthenticatedUser;
+import local.chat.springchattest.information.LogsListRequest;
 import local.chat.springchattest.service.chats.RoomsService;
 import local.chat.springchattest.service.logs.LogsService;
 import local.chat.springchattest.service.users.UsersService;
@@ -124,12 +125,14 @@ public class LoggingAspect {
                     log.setActionName("Enter to a page");
                     log.setActionDescription("Enter to page with url GET:/admin");
                 } case "showLogsPage" -> {
+                    LogsListRequest logsListRequest = (LogsListRequest) arguments[0];
                     log.setActionName("Enter to a page");
                     log.setActionDescription("Enter to page with url GET:/admin/logs" +
-                            "?id=" + arguments[0] +
-                            "&nickname=" + arguments[1] +
-                            "&from=" + arguments[2] +
-                            "&till=" + arguments[3]);
+                            "?pageId=" + logsListRequest.getPageId() +
+                            "&userId=" + logsListRequest.getUserId() +
+                            "&userNickname=" + logsListRequest.getUserNickname() +
+                            "&from=" + logsListRequest.getFrom() +
+                            "&till=" + logsListRequest.getTill());
                 } case "showUsersPage" -> {
                     log.setActionName("Enter to a page");
                     log.setActionDescription("Enter to page with url GET:/users");

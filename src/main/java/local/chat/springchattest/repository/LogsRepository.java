@@ -8,35 +8,35 @@ import java.util.List;
 
 public interface LogsRepository extends JpaRepository<Log, Long> {
 
-    List<Log> findAll();
+    List<Log> findAllByIdBetween(long initId, long endId);
 
-    List<Log> findAllByUser_Id(int userId);
+    List<Log> findAllByUser_IdAndIdBetween(int userId, long initId, long endId);
 
-    List<Log> findAllByUser_Nickname(String userNickname);
+    List<Log> findAllByUser_NicknameAndIdBetween(String userNickname, long initId, long endId);
 
-    List<Log> findAllByUser_IdAndUser_Nickname(int userId, String userNickname);
+    List<Log> findAllByUser_IdAndUser_NicknameAndIdBetween(int userId, String userNickname, long initId, long endId);
 
-    List<Log> findAllByTimestampAfter(Date from);
+    List<Log> findAllByTimestampAfterAndIdBetween(Date from, long initId, long endId);
 
-    List<Log> findAllByTimestampBefore(Date till);
+    List<Log> findAllByTimestampBeforeAndIdBetween(Date till, long initId, long endId);
 
-    List<Log> findAllByTimestampBetween(Date from, Date till);
+    List<Log> findAllByTimestampBetweenAndIdBetween(Date from, Date till, long initId, long endId);
 
-    List<Log> findAllByUser_IdAndTimestampAfter(int userId, Date from);
+    List<Log> findAllByUser_IdAndTimestampAfterAndIdBetween(int userId, Date from, long initId, long endId);
 
-    List<Log> findAllByUser_IdAndTimestampBefore(int userId, Date till);
+    List<Log> findAllByUser_IdAndTimestampBeforeAndIdBetween(int userId, Date till, long initId, long endId);
 
-    List<Log> findAllByUser_IdAndTimestampBetween(int userId, Date from, Date till);
+    List<Log> findAllByUser_IdAndTimestampBetweenAndIdBetween(int userId, Date from, Date till, long initId, long endId);
 
-    List<Log> findAllByUser_NicknameAndTimestampAfter(String userNickname, Date from);
+    List<Log> findAllByUser_NicknameAndTimestampAfterAndIdBetween(String userNickname, Date from, long initId, long endId);
 
-    List<Log> findAllByUser_NicknameAndTimestampBefore(String userNickname, Date till);
+    List<Log> findAllByUser_NicknameAndTimestampBeforeAndIdBetween(String userNickname, Date till, long initId, long endId);
 
-    List<Log> findAllByUser_NicknameAndTimestampBetween(String userNickname, Date from, Date till);
+    List<Log> findAllByUser_NicknameAndTimestampBetweenAndIdBetween(String userNickname, Date from, Date till, long initId, long endId);
 
-    List<Log> findAllByUser_IdAndUser_NicknameAndTimestampAfter(int userId, String userNickname, Date from);
+    List<Log> findAllByUser_IdAndUser_NicknameAndTimestampAfterAndIdBetween(int userId, String userNickname, Date from, long initId, long endId);
 
-    List<Log> findAllByUser_IdAndUser_NicknameAndTimestampBefore(int userId, String userNickname, Date till);
+    List<Log> findAllByUser_IdAndUser_NicknameAndTimestampBeforeAndIdBetween(int userId, String userNickname, Date till, long initId, long endId);
 
-    List<Log> findAllByUser_IdAndUser_NicknameAndTimestampBetween(int userId, String userNickname, Date from, Date till);
+    List<Log> findAllByUser_IdAndUser_NicknameAndTimestampBetweenAndIdBetween(int userId, String userNickname, Date from, Date till, long initId, long endId);
 }

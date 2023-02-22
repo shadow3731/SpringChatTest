@@ -7,37 +7,37 @@ import java.util.List;
 
 public interface LogsService {
 
-    List<Log> getAllLogs();
+    List<Log> getAllLogsByIdBetween(long initId, long endId);
 
-    List<Log> getAllLogsByUserId(int id);
+    List<Log> getAllLogsByUserIdAndByIdBetween(int id, long initId, long endId);
 
-    List<Log> getAllLogsByUserNickname(String nickname);
+    List<Log> getAllLogsByUserNicknameAndByIdBetween(String nickname, long initId, long endId);
 
-    List<Log> getAllLogsByUserIdAndUserNickname(int id, String nickname);
+    List<Log> getAllLogsByUserIdAndUserNicknameAndByIdBetween(int id, String nickname, long initId, long endId);
 
-    List<Log> getAllLogsFrom(Date from);
+    List<Log> getAllLogsFromAndByIdBetween(Date from, long initId, long endId);
 
-    List<Log> getAllLogsTill(Date till);
+    List<Log> getAllLogsTillAndByIdBetween(Date till, long initId, long endId);
 
-    List<Log> getAllLogsBetween(Date from, Date till);
+    List<Log> getAllLogsBetweenAndByIdBetween(Date from, Date till, long initId, long endId);
 
-    List<Log> getAllLogsByUserIdFrom(int id, Date from);
+    List<Log> getAllLogsByUserIdFromAndByIdBetween(int id, Date from, long initId, long endId);
 
-    List<Log> getAllLogsByUserIdTill(int id, Date till);
+    List<Log> getAllLogsByUserIdTillAndByIdBetween(int id, Date till, long initId, long endId);
 
-    List<Log> getAllLogsByUserIdBetween(int id, Date from, Date till);
+    List<Log> getAllLogsByUserIdBetweenAndByIdBetween(int id, Date from, Date till, long initId, long endId);
 
-    List<Log> getAllLogsByUserNicknameFrom(String nickname, Date from);
+    List<Log> getAllLogsByUserNicknameFromAndByIdBetween(String nickname, Date from, long initId, long endId);
 
-    List<Log> getAllLogsByUserNicknameTill(String nickname, Date till);
+    List<Log> getAllLogsByUserNicknameTillAndByIdBetween(String nickname, Date till, long initId, long endId);
 
-    List<Log> getAllLogsByUserNicknameBetween(String nickname, Date from, Date till);
+    List<Log> getAllLogsByUserNicknameBetweenAndByIdBetween(String nickname, Date from, Date till, long initId, long endId);
 
-    List<Log> getAllLogsByUserIdAndUserNicknameFrom(int id, String nickname, Date from);
+    List<Log> getAllLogsByUserIdAndUserNicknameFromAndByIdBetween(int id, String nickname, Date from, long initId, long endId);
 
-    List<Log> getAllLogsByUserIdAndUserNicknameTill(int id, String nickname, Date till);
+    List<Log> getAllLogsByUserIdAndUserNicknameTillAndByIdBetween(int id, String nickname, Date till, long initId, long endId);
 
-    List<Log> getAllLogsByUserIdAndUserNicknameBetween(int id, String nickname, Date from, Date till);
+    List<Log> getAllLogsByUserIdAndUserNicknameBetweenAndByIdBetween(int id, String nickname, Date from, Date till, long initId, long endId);
 
     void saveLog(Log log);
 }

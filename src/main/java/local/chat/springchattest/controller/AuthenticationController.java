@@ -48,7 +48,6 @@ public class AuthenticationController {
             }
 
             User DBUser = usersService.getUserByNickname(user.getNickname());
-
             if (DBUser == null ||
                     !Objects.equals(user.getNickname(), DBUser.getNickname()) ||
                     !Arrays.equals(EncryptionUtils.encrypt(user.getPassword()),
@@ -98,8 +97,9 @@ public class AuthenticationController {
             user.setPassword(EncryptionUtils.encrypt(user.getPassword()));
             user.setAuthority(authoritiesService.getAuthorityById(1));
             usersService.saveUser(user);
-            user.setId(usersService.getUserByNickname(user.getNickname()).getId());
+
             user.setPassword(null);
+            user.setId(usersService.getUserByNickname(user.getNickname()).getId());
 
             Map<String, Object> modelsMap = CommonModel.getCommonModels();
             modelsMap.replace("user", user);
