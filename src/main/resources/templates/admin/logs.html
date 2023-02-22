@@ -20,18 +20,19 @@
         <div class="logs_inner">
             <form class="logs_params"
                   th:method="GET"
-                  th:action="@{/admin/logs}">
+                  th:action="@{/admin/logs}"
+                  th:object="${logsRequest}">
                 <div class="logs_params_field">
                     <div class="logs_users_section">
                         <label class="logs_users_section_id">User ID:
                             <input class="logs_users_section_id_input"
                                    type="text"
-                                   th:name="id" />
+                                   th:field="*{userId}" />
                         </label>
                         <label class="logs_users_section_nick">User nickname:
                             <input class="logs_users_section_nick_input"
                                    type="text"
-                                   th:name="nickname" />
+                                   th:field="*{userNickname}" />
                         </label>
                         <div class="logs_users_section_remark">
                             Leave both fields empty to see all users
@@ -42,12 +43,12 @@
                         <label class="logs_dates_section_from">From:
                             <input class="logs_dates_section_from_input"
                                    type="datetime-local"
-                                   th:name="from" />
+                                   th:field="*{from}" />
                         </label>
                         <label class="logs_dates_section_till">Till:
                             <input class="logs_dates_section_till_input"
                                    type="datetime-local"
-                                   th:name="till" />
+                                   th:field="*{till}" />
                         </label>
                         <div class="logs_dates_section_remark">
                             Leave one field empty to see the period from start/till now
@@ -65,7 +66,12 @@
 
                         </div>
                         <div class="logs_pages_manual">
-
+                            <input class="logs_pages_number"
+                                   type="text"
+                                   th:field="*{pageId}">
+                            <input class="logs_pages_go_to"
+                                   type="submit"
+                                   value="Go to">
                         </div>
                     </div>
                     <input class="logs_submit"
