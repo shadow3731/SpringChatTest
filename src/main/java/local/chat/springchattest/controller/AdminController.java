@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.time.LocalDateTime;
@@ -31,7 +32,8 @@ public class AdminController {
     }
 
     @GetMapping("/admin/logs")
-    public String showLogsPage(@ModelAttribute("logsRequest") LogsListRequest logsListRequest,
+    public String showLogsPage(@RequestParam(value = "action", required = false) String action,
+                               @ModelAttribute("logsRequest") LogsListRequest logsListRequest,
                                Model model) throws ParseException {
         if (logsListRequest.getFrom() != null &&
                 logsListRequest.getTill() != null &&
@@ -50,7 +52,17 @@ public class AdminController {
             }
         }
 
+        if (action != null) {
+            switch (action) {
+                case "Show logs", "<<" -> logsListRequest.setPageId(1);
+                case "Go to" -> {}
+                case "<" -> logsListRequest.setPageId(logsListRequest.getPageId() - 1);
+                case ">" -> logsListRequest.setPageId(logsListRequest.getPageId() + 1);
+            }
+        }
+
         if (logsListRequest.getPageId() < 1) {
+            logsListRequest.setPageId(1);
             model.addAttribute("invalidPageId",
                     "Invalid number of page");
             return "admin/logs";
@@ -62,35 +74,6 @@ public class AdminController {
 
         return "admin/logs";
     }
-
-    /*@GetMapping("/admin/logs")
-    public String showLogsPage(@RequestParam(value = "id", required = false) String id,
-                               @RequestParam(value = "nickname", required = false) String nickname,
-                               @RequestParam(value = "from", required = false) String from,
-                               @RequestParam(value = "till", required = false) String till,
-                               Model model) throws ParseException {
-        if (from != null && till != null &&
-                !Objects.equals(from, "") &&
-                !Objects.equals(till, "")) {
-            long fromTimestamp = LocalDateTime.parse(from)
-                    .toEpochSecond(ZoneOffset
-                            .from(OffsetDateTime.now()));
-            long tillTimestamp = LocalDateTime.parse(till)
-                    .toEpochSecond(ZoneOffset
-                            .from(OffsetDateTime.now()));
-            if (tillTimestamp - fromTimestamp < 0) {
-                model.addAttribute("invalidTimestampGap",
-                        "Invalid timestamp gap");
-                return "admin/logs";
-            }
-        }
-
-        LogsReader logsReader = new LogsReader();
-        model.addAttribute("logs",
-                logsReader.returnLogs(logsService, id, nickname, from, till));
-
-        return "admin/logs";
-    }*/
 
     @ModelAttribute
     public void getCommonInfo(Model model) {

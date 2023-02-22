@@ -29,8 +29,7 @@ public class LogsListRequest {
     @Override
     public String toString() {
         return "LogsList{" +
-                "LOGS_AMOUNT_ON_PAGE=" + LOGS_AMOUNT_ON_PAGE +
-                ", pageId=" + pageId +
+                "pageId=" + pageId +
                 ", userId=" + userId +
                 ", userNickname='" + userNickname + '\'' +
                 ", from=" + from +

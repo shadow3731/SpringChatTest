@@ -57,13 +57,32 @@
                     </div>
                 </div>
                 <div class="logs_params_bottom">
-                    <div class="logs_error"
-                         th:unless="${invalidTimestampGap == null}"
-                         th:text="${invalidTimestampGap}">
+                    <div>
+                        <span class="logs_error"
+                              th:unless="${invalidTimestampGap == null}"
+                              th:text="${invalidTimestampGap}"></span>
+                        <span class="logs_error"
+                              th:unless="${invalidPageId == null}"
+                              th:text="${invalidPageId}"></span>
                     </div>
                     <div class="logs_pages">
                         <div class="logs_pages_auto">
-
+                            <input class="logs_pages_to_first"
+                                   type="submit"
+                                   name="action"
+                                   value="<<">
+                            <input class="logs_pages_previous"
+                                   type="submit"
+                                   name="action"
+                                   value="<">
+                            <input class="logs_pages_next"
+                                   type="submit"
+                                   name="action"
+                                   value=">">
+                            <input class="logs_pages_to_last"
+                                   type="submit"
+                                   name="action"
+                                   value=">>">
                         </div>
                         <div class="logs_pages_manual">
                             <input class="logs_pages_number"
@@ -71,11 +90,13 @@
                                    th:field="*{pageId}">
                             <input class="logs_pages_go_to"
                                    type="submit"
+                                   name="action"
                                    value="Go to">
                         </div>
                     </div>
                     <input class="logs_submit"
                            type="submit"
+                           name="action"
                            value="Show logs" />
                 </div>
             </form>

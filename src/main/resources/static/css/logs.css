@@ -61,7 +61,7 @@
 }
 
 .logs_error {
-    width: 84%;
+    width: 62%;
     height: 100%;
     margin-right: .5%;
     border: solid 1px #0000ff;
@@ -71,6 +71,67 @@
     color: #ffffff;
     text-align: center;
     font-weight: 600;
+}
+
+.logs_pages {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 .5%;
+}
+
+.logs_pages_auto, .logs_pages_manual {
+    width: 50%;
+    height: 100%;
+    display: flex;
+}
+
+.logs_pages_auto {
+    justify-content: flex-end;
+}
+
+.logs_pages_to_first, .logs_pages_previous,
+.logs_pages_next, .logs_pages_to_last {
+    width: 22%;
+    height: 100%;
+    background-color: #000000;
+    border: solid 1px #ffffff;
+    border-radius: 6px;
+    font-family: cursive;
+    color: #ffffff;
+    margin: 0 1.5%;
+    cursor: pointer;
+}
+
+.logs_pages_manual {
+    justify-content: flex-start;
+}
+
+.logs_pages_number, .logs_pages_go_to {
+    margin: 0 1.5%;
+}
+
+.logs_pages_number {
+    width: 52%;
+    height: 100%;
+    font-family: cursive;
+    background-color: #000000;
+    border: solid 1px #ffffff;
+    border-radius: 6px;
+    color: #ffffff;
+}
+
+.logs_pages_go_to {
+    width: 42%;
+    height: 100%;
+    background-color: #000000;
+    border: solid 1px #ffffff;
+    border-radius: 6px;
+    font-family: cursive;
+    color: #ffffff;
+    cursor: pointer;
 }
 
 .logs_submit {

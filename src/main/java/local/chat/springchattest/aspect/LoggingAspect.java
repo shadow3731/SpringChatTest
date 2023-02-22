@@ -125,7 +125,7 @@ public class LoggingAspect {
                     log.setActionName("Enter to a page");
                     log.setActionDescription("Enter to page with url GET:/admin");
                 } case "showLogsPage" -> {
-                    LogsListRequest logsListRequest = (LogsListRequest) arguments[0];
+                    LogsListRequest logsListRequest = (LogsListRequest) arguments[1];
                     log.setActionName("Enter to a page");
                     log.setActionDescription("Enter to page with url GET:/admin/logs" +
                             "?pageId=" + logsListRequest.getPageId() +
