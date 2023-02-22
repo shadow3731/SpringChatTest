@@ -116,7 +116,7 @@ public class LoggingAspect {
                             "] to [" + message.getMessage() + "] with url POST:/rooms/" +
                             arguments[0] + "/messages/" + arguments[1]);
                 } case "deleteMessage" -> {
-                    message = (Message) arguments[1];
+                    message = roomsService.getMessageById((int) arguments[1]);
                     log.setActionName("Delete a message");
                     log.setActionDescription("Delete message [" + message.getMessage() +
                             "] with url POST:/rooms/" + arguments[0] + "/messages/" +
@@ -132,7 +132,8 @@ public class LoggingAspect {
                             "&userId=" + logsListRequest.getUserId() +
                             "&userNickname=" + logsListRequest.getUserNickname() +
                             "&from=" + logsListRequest.getFrom() +
-                            "&till=" + logsListRequest.getTill());
+                            "&till=" + logsListRequest.getTill() +
+                            "&action=" + arguments[0]);
                 } case "showUsersPage" -> {
                     log.setActionName("Enter to a page");
                     log.setActionDescription("Enter to page with url GET:/users");

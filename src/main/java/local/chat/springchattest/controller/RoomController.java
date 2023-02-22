@@ -58,24 +58,20 @@ public class RoomController {
     public String addMessage(@PathVariable("roomId") int roomId,
                              @ModelAttribute("newMessage") @Valid Message message,
                              BindingResult bindingResult) {
-        if (AuthenticatedUser.isThisUserAuthenticated()) {
-            if (bindingResult.hasErrors()) {
-                return "redirect:/rooms/" + roomId + "/messages";
-            }
-
-            message.setId(roomsService.countAllMessages() + 1);
-            message.setRoomId(roomId);
-            message.setTimestamp(new Date());
-            message.setDeleted(false);
-
-            User user = (User) CommonModel.getCommonModels().get("user");
-            message.setUser(usersService.getUserById(user.getId()));
-
-            roomsService.saveMessage(message);
+        if (bindingResult.hasErrors()) {
             return "redirect:/rooms/" + roomId + "/messages";
-        } else {
-            return "redirect:/login";
         }
+
+        message.setId(roomsService.countAllMessages() + 1);
+        message.setRoomId(roomId);
+        message.setTimestamp(new Date());
+        message.setDeleted(false);
+
+        User user = (User) CommonModel.getCommonModels().get("user");
+        message.setUser(usersService.getUserById(user.getId()));
+
+        roomsService.saveMessage(message);
+        return "redirect:/rooms/" + roomId + "/messages";
     }
 
     @GetMapping("/rooms/{roomId}/messages/{id}")
@@ -99,36 +95,26 @@ public class RoomController {
                               @PathVariable("id") int id,
                               @ModelAttribute("thisMessage") @Valid Message message,
                               BindingResult bindingResult) {
-        if (AuthenticatedUser.isThisUserAuthenticated()) {
-            if (bindingResult.hasErrors()) {
-                return "redirect:/rooms/" + roomId + "/messages/" + id;
-            }
-
-            Message DBMessage = roomsService.getMessageById(id);
-            DBMessage.setMessage(message.getMessage());
-            roomsService.saveMessage(DBMessage);
-            return "redirect:/rooms/" + roomId + "/messages";
-        } else {
-            return "redirect:/login";
+        if (bindingResult.hasErrors()) {
+            return "redirect:/rooms/" + roomId + "/messages/" + id;
         }
+
+        Message DBMessage = roomsService.getMessageById(id);
+        DBMessage.setMessage(message.getMessage());
+        roomsService.saveMessage(DBMessage);
+        return "redirect:/rooms/" + roomId + "/messages";
     }
 
     @PostMapping("/rooms/{roomId}/messages/{id}/delete")
     public String deleteMessage(@PathVariable("roomId") int roomId,
                                 @PathVariable("id") int id) {
-        User user = (User) CommonModel.getCommonModels().get("user");
-        if (AuthenticatedUser.isThisUserAuthenticated() &&
-                user.getAuthority().getId() > 1) {
-            Message message = roomsService.getMessageById(id);
-            if (message != null) {
-                message.setDeleted(true);
-                roomsService.saveMessage(message);
-            }
-
-            return "redirect:/rooms/" + roomId + "/messages";
-        } else {
-            return "redirect:/login";
+        Message message = roomsService.getMessageById(id);
+        if (message != null) {
+            message.setDeleted(true);
+            roomsService.saveMessage(message);
         }
+
+        return "redirect:/rooms/" + roomId + "/messages";
     }
 
     @ModelAttribute

@@ -39,4 +39,34 @@ public interface LogsRepository extends JpaRepository<Log, Long> {
     List<Log> findAllByUser_IdAndUser_NicknameAndTimestampBeforeAndIdBetween(int userId, String userNickname, Date till, long initId, long endId);
 
     List<Log> findAllByUser_IdAndUser_NicknameAndTimestampBetweenAndIdBetween(int userId, String userNickname, Date from, Date till, long initId, long endId);
+
+    long countAllByUser_Id(int userId);
+
+    long countAllByUser_Nickname(String userNickname);
+
+    long countAllByUser_IdAndUser_Nickname(int userId, String userNickname);
+
+    long countAllByTimestampAfter(Date from);
+
+    long countAllByTimestampBefore(Date till);
+
+    long countAllByTimestampBetween(Date from, Date till);
+
+    long countAllByUser_IdAndTimestampAfter(int userId, Date from);
+
+    long countAllByUser_IdAndTimestampBefore(int userId, Date till);
+
+    long countAllByUser_IdAndTimestampBetween(int userId, Date from, Date till);
+
+    long countAllByUser_NicknameAndTimestampAfter(String userNickname, Date from);
+
+    long countAllByUser_NicknameAndTimestampBefore(String userNickname, Date till);
+
+    long countAllByUser_NicknameAndTimestampBetween(String userNickname, Date from, Date till);
+
+    long countAllByUser_IdAndUser_NicknameAndTimestampAfter(int userId, String userNickname, Date from);
+
+    long countAllByUser_IdAndUser_NicknameAndTimestampBefore(int userId, String userNickname, Date till);
+
+    long countAllByUser_IdAndUser_NicknameAndTimestampBetween(int userId, String userNickname, Date from, Date till);
 }

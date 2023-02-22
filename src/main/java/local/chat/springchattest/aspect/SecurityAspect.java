@@ -31,7 +31,19 @@ public class SecurityAspect {
     @Pointcut("execution(public * local.chat.springchattest.controller.*.show*(..))")
     private void allShowMethodsFromControllers() {}
 
-    @Around("allShowMethodsFromControllers()")
+    @Pointcut("execution(public * local.chat.springchattest.controller.*.add*(..))")
+    private void allAddMethodsFromControllers() {}
+
+    @Pointcut("execution(public * local.chat.springchattest.controller.*.edit*(..))")
+    private void allEditMethodsFromControllers() {}
+
+    @Pointcut("execution(public * local.chat.springchattest.controller.*.delete*(..))")
+    private void allDeleteMethodsFromControllers() {}
+
+    @Around("allShowMethodsFromControllers() || " +
+            "allAddMethodsFromControllers() || " +
+            "allEditMethodsFromControllers() || " +
+            "allDeleteMethodsFromControllers()")
     public String afterReturningSecurityAdvice(ProceedingJoinPoint proceedingJoinPoint)
             throws Throwable {
         MethodSignature methodSignature = (MethodSignature) proceedingJoinPoint
@@ -41,42 +53,43 @@ public class SecurityAspect {
         Message message;
         String pageName = "login";
 
+        switch (methodSignature.getName()) {
+            case "showIndexPage", "showChatPage",
+                    "addMessage", "showUsersPage",
+                    "showEditMessagePage", "editMessage" -> {
+                if (!AuthenticatedUser.isThisUserAuthenticated()) {
+                    return "redirect:/login";
+                }
+            } case "showAuthenticationPage", "addAuthentication",
+                    "showRegistrationPage", "addRegistration" -> {
+                if (AuthenticatedUser.isThisUserAuthenticated()) {
+                    return "redirect:/";
+                }
+            } case "showAdminRoomPage", "showLogsPage",
+                    "deleteMessage" -> {
+                if (!AuthenticatedUser.isThisUserAuthenticated() ||
+                        AuthenticatedUser.getThisUserIdAuthority() < 2) {
+                    return "redirect:/login";
+                }
+            }
+        }
+
         try {
             pageName = (String) proceedingJoinPoint.proceed();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        switch (methodSignature.getName()) {
-            case "showIndexPage", "showChatPage",
-                    "showUsersPage" -> {
-                if (!AuthenticatedUser.isThisUserAuthenticated()) {
-                    pageName = "redirect:/login";
-                }
-            } case "showAuthenticationPage",
-                    "showRegistrationPage" -> {
-                if (AuthenticatedUser.isThisUserAuthenticated()) {
-                    pageName = "redirect:/";
-                }
-            } case "showAdminRoomPage", "showLogsPage" -> {
-                if (!AuthenticatedUser.isThisUserAuthenticated() ||
-                        AuthenticatedUser.getThisUserIdAuthority() < 2) {
-                    pageName = "redirect:/login";
-                }
-            } case "showEditMessagePage" -> {
-                if (!AuthenticatedUser.isThisUserAuthenticated()) {
-                    pageName = "redirect:/login";
-                } else {
-                    Date serverTime = (Date) CommonModel
-                            .getCommonModels().get("serverDateTime");
-                    message = roomsService.getMessageById((int) arguments[1]);
+        if (methodSignature.getName().equals("showEditMessagePage") ||
+                methodSignature.getName().equals("editMessage")) {
+            Date serverTime = (Date) CommonModel
+                    .getCommonModels().get("serverDateTime");
+            message = roomsService.getMessageById((int) arguments[1]);
 
-                    if (user.getId() != message.getUser().getId() ||
-                            message.getEditDeadlineMills() < serverTime.getTime()) {
-                        pageName = "redirect:/rooms/" + arguments[0] +
-                                "/messages";
-                    }
-                }
+            if (user.getId() != message.getUser().getId() ||
+                    message.getEditDeadlineMills() < serverTime.getTime()) {
+                return "redirect:/rooms/" + arguments[0] +
+                        "/messages";
             }
         }
 

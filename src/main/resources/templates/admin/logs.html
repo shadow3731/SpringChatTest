@@ -57,11 +57,11 @@
                     </div>
                 </div>
                 <div class="logs_params_bottom">
-                    <div>
-                        <span class="logs_error"
+                    <div class="logs_error">
+                        <span class="logs_error_inner"
                               th:unless="${invalidTimestampGap == null}"
                               th:text="${invalidTimestampGap}"></span>
-                        <span class="logs_error"
+                        <span class="logs_error_inner"
                               th:unless="${invalidPageId == null}"
                               th:text="${invalidPageId}"></span>
                     </div>

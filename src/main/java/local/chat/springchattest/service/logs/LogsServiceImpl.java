@@ -100,6 +100,86 @@ public class LogsServiceImpl implements LogsService {
     }
 
     @Override
+    public long countAllLogs() {
+        return logsRepository.count();
+    }
+
+    @Override
+    public long countAllLogsByUserId(int userId) {
+        return logsRepository.countAllByUser_Id(userId);
+    }
+
+    @Override
+    public long countAllLogsByUserNickname(String userNickname) {
+        return logsRepository.countAllByUser_Nickname(userNickname);
+    }
+
+    @Override
+    public long countAllLogsByUserIdAndUserNickname(int userId, String userNickname) {
+        return logsRepository.countAllByUser_IdAndUser_Nickname(userId, userNickname);
+    }
+
+    @Override
+    public long countAllLogsFrom(Date from) {
+        return logsRepository.countAllByTimestampAfter(from);
+    }
+
+    @Override
+    public long countAllLogsTill(Date till) {
+        return logsRepository.countAllByTimestampBefore(till);
+    }
+
+    @Override
+    public long countAllLogsBetween(Date from, Date till) {
+        return logsRepository.countAllByTimestampBetween(from, till);
+    }
+
+    @Override
+    public long countAllLogsByUserIdFrom(int userId, Date from) {
+        return logsRepository.countAllByUser_IdAndTimestampAfter(userId, from);
+    }
+
+    @Override
+    public long countAllLogsByUserIdTill(int userId, Date till) {
+        return logsRepository.countAllByUser_IdAndTimestampBefore(userId, till);
+    }
+
+    @Override
+    public long countAllLogsByUserIdBetween(int userId, Date from, Date till) {
+        return logsRepository.countAllByUser_IdAndTimestampBetween(userId, from, till);
+    }
+
+    @Override
+    public long countAllLogsByUserNicknameFrom(String userNickname, Date from) {
+        return logsRepository.countAllByUser_NicknameAndTimestampAfter(userNickname, from);
+    }
+
+    @Override
+    public long countAllLogsByUserNicknameTill(String userNickname, Date till) {
+        return logsRepository.countAllByUser_NicknameAndTimestampBefore(userNickname, till);
+    }
+
+    @Override
+    public long countAllLogsByUserNicknameBetween(String userNickname, Date from, Date till) {
+        return logsRepository.countAllByUser_NicknameAndTimestampBetween(userNickname, from, till);
+    }
+
+    @Override
+    public long countAllLogsByUserIdAndUserFrom(int userId, String userNickname, Date from) {
+        return logsRepository.countAllByUser_IdAndUser_NicknameAndTimestampAfter(userId, userNickname, from);
+    }
+
+    @Override
+    public long countAllLogsByUserIdAndUserTill(int userId, String userNickname, Date till) {
+        return logsRepository.countAllByUser_IdAndUser_NicknameAndTimestampBefore(userId, userNickname, till);
+    }
+
+    @Override
+    public long countAllLogsByUserIdAndUserBetween(int userId, String userNickname, Date from, Date till) {
+        return logsRepository.countAllByUser_IdAndUser_NicknameAndTimestampBetween(userId, userNickname, from, till);
+    }
+
+    @Override
     public void saveLog(Log log) {
         logsRepository.save(log);
     }

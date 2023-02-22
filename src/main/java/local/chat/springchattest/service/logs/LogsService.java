@@ -39,5 +39,37 @@ public interface LogsService {
 
     List<Log> getAllLogsByUserIdAndUserNicknameBetweenAndByIdBetween(int id, String nickname, Date from, Date till, long initId, long endId);
 
+    long countAllLogs();
+
+    long countAllLogsByUserId(int userId);
+
+    long countAllLogsByUserNickname(String userNickname);
+
+    long countAllLogsByUserIdAndUserNickname(int userId, String userNickname);
+
+    long countAllLogsFrom(Date from);
+
+    long countAllLogsTill(Date till);
+
+    long countAllLogsBetween(Date from, Date till);
+
+    long countAllLogsByUserIdFrom(int userId, Date from);
+
+    long countAllLogsByUserIdTill(int userId, Date till);
+
+    long countAllLogsByUserIdBetween(int userId, Date from, Date till);
+
+    long countAllLogsByUserNicknameFrom(String userNickname, Date from);
+
+    long countAllLogsByUserNicknameTill(String userNickname, Date till);
+
+    long countAllLogsByUserNicknameBetween(String userNickname, Date from, Date till);
+
+    long countAllLogsByUserIdAndUserFrom(int userId, String userNickname, Date from);
+
+    long countAllLogsByUserIdAndUserTill(int userId, String userNickname, Date till);
+
+    long countAllLogsByUserIdAndUserBetween(int userId, String userNickname, Date from, Date till);
+
     void saveLog(Log log);
 }

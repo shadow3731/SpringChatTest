@@ -42,34 +42,30 @@ public class AuthenticationController {
                                       BindingResult bindingResult,
                                       Model model)
             throws Exception {
-        if (!AuthenticatedUser.isThisUserAuthenticated()) {
-            if (bindingResult.hasErrors()) {
-                return "authentication/login";
-            }
-
-            User DBUser = usersService.getUserByNickname(user.getNickname());
-            if (DBUser == null ||
-                    !Objects.equals(user.getNickname(), DBUser.getNickname()) ||
-                    !Arrays.equals(EncryptionUtils.encrypt(user.getPassword()),
-                            DBUser.getPassword())) {
-                model.addAttribute("badCredentials",
-                        "Bad credentials");
-                return "authentication/login";
-            }
-
-            user.setId(DBUser.getId());
-            user.setPassword(null);
-            user.setAuthority(DBUser.getAuthority());
-
-            Map<String, Object> modelsMap = CommonModel.getCommonModels();
-            modelsMap.replace("user", user);
-            modelsMap.put("totalUsers", usersService.countAllUsers());
-            CommonModel.setCommonModels(modelsMap);
-
-            return "redirect:/";
-        } else {
+        if (bindingResult.hasErrors()) {
             return "authentication/login";
         }
+
+        User DBUser = usersService.getUserByNickname(user.getNickname());
+        if (DBUser == null ||
+                !Objects.equals(user.getNickname(), DBUser.getNickname()) ||
+                !Arrays.equals(EncryptionUtils.encrypt(user.getPassword()),
+                        DBUser.getPassword())) {
+            model.addAttribute("badCredentials",
+                    "Bad credentials");
+            return "authentication/login";
+        }
+
+        user.setId(DBUser.getId());
+        user.setPassword(null);
+        user.setAuthority(DBUser.getAuthority());
+
+        Map<String, Object> modelsMap = CommonModel.getCommonModels();
+        modelsMap.replace("user", user);
+        modelsMap.put("totalUsers", usersService.countAllUsers());
+        CommonModel.setCommonModels(modelsMap);
+
+        return "redirect:/";
     }
 
     @GetMapping("/register")
@@ -82,34 +78,30 @@ public class AuthenticationController {
                                     BindingResult bindingResult,
                                     Model model)
             throws Exception {
-        if (!AuthenticatedUser.isThisUserAuthenticated()) {
-            if (bindingResult.hasErrors()) {
-                return "authentication/register";
-            }
-
-            User DBUser = usersService.getUserByNickname(user.getNickname());
-            if (DBUser != null) {
-                model.addAttribute("existingUser",
-                        "This user already exists");
-                return "authentication/register";
-            }
-
-            user.setPassword(EncryptionUtils.encrypt(user.getPassword()));
-            user.setAuthority(authoritiesService.getAuthorityById(1));
-            usersService.saveUser(user);
-
-            user.setPassword(null);
-            user.setId(usersService.getUserByNickname(user.getNickname()).getId());
-
-            Map<String, Object> modelsMap = CommonModel.getCommonModels();
-            modelsMap.replace("user", user);
-            modelsMap.put("totalUsers", usersService.countAllUsers());
-            CommonModel.setCommonModels(modelsMap);
-
-            return "redirect:/";
-        } else {
+        if (bindingResult.hasErrors()) {
             return "authentication/register";
         }
+
+        User DBUser = usersService.getUserByNickname(user.getNickname());
+        if (DBUser != null) {
+            model.addAttribute("existingUser",
+                    "This user already exists");
+            return "authentication/register";
+        }
+
+        user.setPassword(EncryptionUtils.encrypt(user.getPassword()));
+        user.setAuthority(authoritiesService.getAuthorityById(1));
+        usersService.saveUser(user);
+
+        user.setPassword(null);
+        user.setId(usersService.getUserByNickname(user.getNickname()).getId());
+
+        Map<String, Object> modelsMap = CommonModel.getCommonModels();
+        modelsMap.replace("user", user);
+        modelsMap.put("totalUsers", usersService.countAllUsers());
+        CommonModel.setCommonModels(modelsMap);
+
+        return "redirect:/";
     }
 
     @GetMapping("/logout")

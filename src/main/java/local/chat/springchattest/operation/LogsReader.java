@@ -4,6 +4,7 @@ import local.chat.springchattest.entity.Log;
 import local.chat.springchattest.information.LogsListRequest;
 import local.chat.springchattest.service.logs.LogsService;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.text.ParseException;
@@ -16,9 +17,16 @@ import java.util.Objects;
 @NoArgsConstructor
 public class LogsReader {
 
-    public List<Log> returnLogs(LogsListRequest logsListRequest,
-                                LogsService logsService)
-            throws ParseException {
+    private LogsService logsService;
+    private LogsListRequest logsListRequest;
+
+    public LogsReader(@Autowired LogsService logsService,
+                      @Autowired LogsListRequest logsListRequest) {
+        this.logsService = logsService;
+        this.logsListRequest = logsListRequest;
+    }
+
+    public List<Log> returnLogs() throws ParseException {
         long endLogId = logsListRequest.getPageId() * logsListRequest.getLOGS_AMOUNT_ON_PAGE();
         long initLogId = endLogId - logsListRequest.getLOGS_AMOUNT_ON_PAGE() + 1;
 
@@ -117,7 +125,101 @@ public class LogsReader {
         }
     }
 
+    public long returnLastPage() throws ParseException {
+        long lastPage;
+
+        if (isBlank(logsListRequest.getUserId())) {
+            if (isBlank(logsListRequest.getUserNickname())) {
+                if (isBlank(logsListRequest.getFrom())) {
+                    if (isBlank(logsListRequest.getTill())) {
+                        lastPage = logsService.countAllLogs();
+                    } else {
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+                                .parse(logsListRequest.getTill().replace("T", " "));
+                        lastPage = logsService.countAllLogsTill(tillDate);
+                    }
+                } else {
+                    Date fromDate = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+                            .parse(logsListRequest.getFrom().replace("T", " "));
+                    if (isBlank(logsListRequest.getTill())) {
+                        lastPage = logsService.countAllLogsFrom(fromDate);
+                    } else {
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+                                .parse(logsListRequest.getTill().replace("T", " "));
+                        lastPage = logsService.countAllLogsBetween(fromDate, tillDate);
+                    }
+                }
+            } else {
+                if (isBlank(logsListRequest.getFrom())) {
+                    if (isBlank(logsListRequest.getTill())) {
+                        lastPage = logsService.countAllLogsByUserNickname(logsListRequest.getUserNickname());
+                    } else {
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+                                .parse(logsListRequest.getTill().replace("T", " "));
+                        lastPage = logsService.countAllLogsByUserNicknameTill(logsListRequest.getUserNickname(), tillDate);
+                    }
+                } else {
+                    Date fromDate = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+                            .parse(logsListRequest.getFrom().replace("T", " "));
+                    if (isBlank(logsListRequest.getTill())) {
+                        lastPage = logsService.countAllLogsByUserNicknameFrom(logsListRequest.getUserNickname(), fromDate);
+                    } else {
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+                                .parse(logsListRequest.getTill().replace("T", " "));
+                        lastPage = logsService.countAllLogsByUserNicknameBetween(logsListRequest.getUserNickname(), fromDate, tillDate);
+                    }
+                }
+            }
+        } else {
+            if (isBlank(logsListRequest.getUserNickname())) {
+                if (isBlank(logsListRequest.getFrom())) {
+                    if (isBlank(logsListRequest.getTill())) {
+                        lastPage = logsService.countAllLogsByUserId(Integer.parseInt(logsListRequest.getUserId()));
+                    } else {
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+                                .parse(logsListRequest.getTill().replace("T", " "));
+                        lastPage = logsService.countAllLogsByUserIdTill(Integer.parseInt(logsListRequest.getUserId()), tillDate);
+                    }
+                } else {
+                    Date fromDate = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+                            .parse(logsListRequest.getFrom().replace("T", " "));
+                    if (isBlank(logsListRequest.getTill())) {
+                        lastPage = logsService.countAllLogsByUserIdFrom(Integer.parseInt(logsListRequest.getUserId()), fromDate);
+                    } else {
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+                                .parse(logsListRequest.getTill().replace("T", " "));
+                        lastPage = logsService.countAllLogsByUserIdBetween(Integer.parseInt(logsListRequest.getUserId()), fromDate, tillDate);
+                    }
+                }
+            } else {
+                if (isBlank(logsListRequest.getFrom())) {
+                    if (isBlank(logsListRequest.getTill())) {
+                        lastPage = logsService.countAllLogsByUserIdAndUserNickname(Integer.parseInt(logsListRequest.getUserId()), logsListRequest.getUserNickname());
+                    } else {
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+                                .parse(logsListRequest.getTill().replace("T", " "));
+                        lastPage = logsService.countAllLogsByUserIdAndUserTill(Integer.parseInt(logsListRequest.getUserId()), logsListRequest.getUserNickname(), tillDate);
+                    }
+                } else {
+                    Date fromDate = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+                            .parse(logsListRequest.getFrom().replace("T", " "));
+                    if (isBlank(logsListRequest.getTill())) {
+                        lastPage = logsService.countAllLogsByUserIdAndUserFrom(Integer.parseInt(logsListRequest.getUserId()), logsListRequest.getUserNickname(), fromDate);
+                    } else {
+                        Date tillDate = new SimpleDateFormat("yyyy-MM-dd HH:mm")
+                                .parse(logsListRequest.getTill().replace("T", " "));
+                        lastPage = logsService.countAllLogsByUserIdAndUserBetween(Integer.parseInt(logsListRequest.getUserId()), logsListRequest.getUserNickname(), fromDate, tillDate);
+                    }
+                }
+            }
+        }
+
+        return (long) Math.ceil(lastPage / (double) logsListRequest.getLOGS_AMOUNT_ON_PAGE());
+    }
+
     private boolean isBlank(String object) {
         return  object == null || Objects.equals(object, "");
     }
+
+
 }
