@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
@@ -36,13 +38,25 @@ public class User {
     @JoinColumn(name = "authority_id")
     private Authority authority;
 
-    public User(int id, String nickname, @Size(min = 6,
-            max = 50,
-            message = "Password must be between 6 and 50 symbols") byte[] password, Authority authority) {
+    @Column(name = "last_action_at")
+    private Date lastActionAt;
+
+    @Transient
+    private long lastActionAtInMills;
+
+    public User(int id,
+                String nickname,
+                @Size(min = 6,
+                    max = 50,
+                    message = "Password must be between 6 and 50 symbols")
+                byte[] password,
+                Authority authority,
+                Date lastActionAt) {
         this.id = id;
         this.nickname = nickname;
         this.password = password;
         this.authority = authority;
+        this.lastActionAt = lastActionAt;
     }
 
     @Override
@@ -51,6 +65,8 @@ public class User {
                 "id=" + id +
                 ", nickname='" + nickname + '\'' +
                 ", authority=" + authority +
+                ", lastActionAt=" + lastActionAt +
+                ", lastActionAtInMills=" + lastActionAtInMills +
                 '}';
     }
 }

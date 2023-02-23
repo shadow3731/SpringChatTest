@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -38,6 +39,13 @@ public class UsersServiceImpl implements UsersService {
     public User getUserByNickname(String nickname) {
         return usersRepository.findByNickname(nickname).orElse(null);
     }
+
+    @Override
+    public int countAllUsersOnline() {
+        Date starting = new Date(new Date().getTime() - 300000);
+        return usersRepository.countAllByLastActionAtAfter(starting);
+    }
+
 
     @Override
     public void saveUser(User user) {

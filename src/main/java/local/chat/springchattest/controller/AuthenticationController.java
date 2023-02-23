@@ -2,7 +2,6 @@ package local.chat.springchattest.controller;
 
 import jakarta.validation.Valid;
 import local.chat.springchattest.entity.User;
-import local.chat.springchattest.information.AuthenticatedUser;
 import local.chat.springchattest.operation.EncryptionUtils;
 import local.chat.springchattest.service.authorities.AuthoritiesService;
 import local.chat.springchattest.service.users.UsersService;
@@ -60,10 +59,7 @@ public class AuthenticationController {
         user.setPassword(null);
         user.setAuthority(DBUser.getAuthority());
 
-        Map<String, Object> modelsMap = CommonModel.getCommonModels();
-        modelsMap.replace("user", user);
-        modelsMap.put("totalUsers", usersService.countAllUsers());
-        CommonModel.setCommonModels(modelsMap);
+        changeCommonModel(user);
 
         return "redirect:/";
     }
@@ -96,10 +92,7 @@ public class AuthenticationController {
         user.setPassword(null);
         user.setId(usersService.getUserByNickname(user.getNickname()).getId());
 
-        Map<String, Object> modelsMap = CommonModel.getCommonModels();
-        modelsMap.replace("user", user);
-        modelsMap.put("totalUsers", usersService.countAllUsers());
-        CommonModel.setCommonModels(modelsMap);
+        changeCommonModel(user);
 
         return "redirect:/";
     }
@@ -108,6 +101,7 @@ public class AuthenticationController {
     public String showLogoutPage() {
         Map<String, Object> modelsMap = CommonModel.getCommonModels();
         modelsMap.replace("user", new User());
+        modelsMap.remove("onlineUsers");
         modelsMap.remove("totalUsers");
         CommonModel.setCommonModels(modelsMap);
         return "redirect:/login";
@@ -116,5 +110,13 @@ public class AuthenticationController {
     @ModelAttribute
     public void getCommonInfo(Model model) {
         model.addAllAttributes(CommonModel.getCommonModels());
+    }
+
+    private void changeCommonModel(User user) {
+        Map<String, Object> modelsMap = CommonModel.getCommonModels();
+        modelsMap.replace("user", user);
+        modelsMap.put("totalOnline", usersService.countAllUsersOnline());
+        modelsMap.put("totalUsers", usersService.countAllUsers());
+        CommonModel.setCommonModels(modelsMap);
     }
 }

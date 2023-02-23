@@ -54,11 +54,19 @@
             id="footer"
             th:fragment="commonFooter">
         <div class="footer_all_users">
-            <div class="footer_all_users_title">Total users: </div>
-            <div class="footer_all_users_amount">
-                <a class="footer_all_users_amount_href"
-                   th:href="@{/users}"
-                   th:text="${totalUsers}"></a>
+            <div class="footer_all_users_title">Total users:
+                <span class="footer_all_users_amount">
+                    <a class="footer_all_users_amount_href"
+                       th:href="@{/users}"
+                       th:text="${totalUsers}"></a>
+                </span>
+            </div>
+            <div class="footer_online_users_title">(Online:
+                <span class="footer_online_users_amount">
+                    <a class="footer_online_users_amount_href"
+                       th:href="@{/online}"
+                       th:text="${totalOnline}"></a>
+                </span>)
             </div>
         </div>
         <div class="footer_server_time">

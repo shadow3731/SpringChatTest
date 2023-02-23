@@ -2,6 +2,7 @@ package local.chat.springchattest.service.users;
 
 import local.chat.springchattest.entity.User;
 
+import java.util.Date;
 import java.util.List;
 
 public interface UsersService {
@@ -13,6 +14,8 @@ public interface UsersService {
     User getUserById(int id);
 
     User getUserByNickname(String nickname);
+
+    int countAllUsersOnline();
 
     void saveUser(User user);
 }

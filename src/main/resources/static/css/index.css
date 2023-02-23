@@ -199,15 +199,27 @@ body {
     align-items: center;
 }
 
-.footer_all_users_title {
-    margin-right: 0.15%;
+.footer_all_users_title, .footer_online_users_title {
+    width: 50%;
+    height: 100%;
+    display: flex;
 }
 
-.footer_all_users_amount {
+.footer_all_users_title {
+    justify-content: flex-end;
+    margin-right: 0.5%;
+}
+
+.footer_online_users_title {
+    justify-content: flex-start;
+    margin-left: 0.5%;
+}
+
+.footer_all_users_amount, .footer_online_users_amount {
     margin-left: 0.15%;
 }
 
-.footer_all_users_amount_href {
+.footer_all_users_amount_href, .footer_online_users_amount_href {
     color: #ffffff;
 }
 

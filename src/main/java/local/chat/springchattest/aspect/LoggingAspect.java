@@ -58,7 +58,7 @@ public class LoggingAspect {
     private void allDeleteMethodsFromControllers() {}
 
     @Pointcut("execution(public * local.chat.springchattest.controller.AuthenticationController.*(..))")
-    private void allShowMethodsFromAuthenticationController() {}
+    private void allMethodsFromAuthenticationController() {}
 
     @Pointcut("execution(public * local.chat.springchattest.controller.AuthenticationController.showLogoutPage(..))")
     private void showLogoutPageMethodFromAuthenticationController() {}
@@ -67,7 +67,7 @@ public class LoggingAspect {
             "allAddMethodsFromControllers() || " +
             "allEditMethodsFromControllers() || " +
             "allDeleteMethodsFromControllers() && " +
-            "(!allShowMethodsFromAuthenticationController() || " +
+            "(!allMethodsFromAuthenticationController() || " +
             "showLogoutPageMethodFromAuthenticationController())")
     private void allMethodsFromControllersExceptAuthenticationController() {}
 
