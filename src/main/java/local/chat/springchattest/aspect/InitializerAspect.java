@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 @Order(1)
 public class InitializerAspect {
 
-    private boolean userIsCreated = false;
     private UserFactory userFactory;
 
     @Autowired
@@ -21,10 +20,10 @@ public class InitializerAspect {
     }
 
     @Before("execution(* local.chat.springchattest.controller.*.*(..))")
-    public void beforeConnectToSiteAdvice() {
-        if (!userIsCreated) {
+    public void createUser() {
+        if (userFactory.getCurrentUser() == null) {
             userFactory.createUser();
-            userIsCreated = true;
+            System.out.println(userFactory);
         }
     }
 }

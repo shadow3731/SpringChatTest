@@ -69,6 +69,8 @@ public class AuthenticationController {
 
         changeCommonModel();
 
+
+
         return "redirect:/";
     }
 

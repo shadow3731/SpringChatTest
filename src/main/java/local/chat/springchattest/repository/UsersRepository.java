@@ -1,11 +1,11 @@
 package local.chat.springchattest.repository;
 
-import jakarta.transaction.Transactional;
 import local.chat.springchattest.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -24,6 +24,6 @@ public interface UsersRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Transactional
     @Query("update User u set u.lastActionAt=:timestamp where u.id=:id")
-    void updateLastActionAtById(@Param("id") int id,
-                                @Param("timestamp") Date timestamp);
+    void setLastActionAtById(@Param("id") int id,
+                             @Param("timestamp") Date timestamp);
 }

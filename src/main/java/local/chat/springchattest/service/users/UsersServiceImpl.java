@@ -54,6 +54,6 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public void setLastActionAtByUserId(int id, Date timestamp) {
-        usersRepository.updateLastActionAtById(id, timestamp);
+        usersRepository.setLastActionAtById(id, timestamp);
     }
 }
