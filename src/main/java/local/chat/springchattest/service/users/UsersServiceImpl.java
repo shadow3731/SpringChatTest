@@ -51,4 +51,9 @@ public class UsersServiceImpl implements UsersService {
     public void saveUser(User user) {
         usersRepository.save(user);
     }
+
+    @Override
+    public void setLastActionAtByUserId(int id, Date timestamp) {
+        usersRepository.updateLastActionAtById(id, timestamp);
+    }
 }

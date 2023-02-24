@@ -1,5 +1,6 @@
 package local.chat.springchattest;
 
+import local.chat.springchattest.controller.CommonModel;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

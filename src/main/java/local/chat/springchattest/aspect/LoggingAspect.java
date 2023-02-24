@@ -1,10 +1,9 @@
 package local.chat.springchattest.aspect;
 
-import local.chat.springchattest.controller.CommonModel;
 import local.chat.springchattest.entity.Log;
 import local.chat.springchattest.entity.Message;
 import local.chat.springchattest.entity.User;
-import local.chat.springchattest.information.AuthenticatedUser;
+import local.chat.springchattest.factory.UserFactory;
 import local.chat.springchattest.information.LogsListRequest;
 import local.chat.springchattest.service.chats.RoomsService;
 import local.chat.springchattest.service.logs.LogsService;
@@ -27,8 +26,8 @@ public class LoggingAspect {
 
     private LogsService logsService;
     private UsersService usersService;
-
     private RoomsService roomsService;
+    private UserFactory userFactory;
 
     @Autowired
     public void setLogsService(LogsService logsService) {
@@ -43,6 +42,11 @@ public class LoggingAspect {
     @Autowired
     public void setRoomsService(RoomsService roomsService) {
         this.roomsService = roomsService;
+    }
+
+    @Autowired
+    public void setUserFactory(UserFactory userFactory) {
+        this.userFactory = userFactory;
     }
 
     @Pointcut("execution(public * local.chat.springchattest.controller.*.show*(..))")
@@ -73,58 +77,38 @@ public class LoggingAspect {
 
     @Before("allMethodsFromControllersExceptAuthenticationController()")
     public void beforeLoggerAdvice(JoinPoint joinPoint) {
-        if (AuthenticatedUser.isThisUserAuthenticated()) {
+        //if (AuthenticatedUser.isThisUserAuthenticated()) {
+        if (userFactory.getCurrentUser() != null &&
+                userFactory.getCurrentUser().getAuthority() != null) {
             MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
             Object[] arguments = joinPoint.getArgs();
             Log log = new Log();
-            User user = (User) CommonModel.getCommonModels().get("user");
+            //User user = (User) CommonModel.getCommonModels().get("user");
+            User user = userFactory.getCurrentUser();
             Message message;
 
             log.setUser(usersService.getUserById(user.getId()));
             log.setTimestamp(new Date());
 
+            if (methodSignature.getName().startsWith("show")) {
+                log.setActionName("Enter to a page");
+            } else if (methodSignature.getName().startsWith("add")) {
+                log.setActionName("Add a data");
+            } else if (methodSignature.getName().startsWith("edit")) {
+                log.setActionName("Edit a data");
+            } else if (methodSignature.getName().startsWith("delete")) {
+                log.setActionName("Delete a data");
+            }
+
             switch (methodSignature.getName()) {
-                case "showIndexPage" -> {
-                    log.setActionName("Enter to a page");
-                    log.setActionDescription("Enter to page with url GET:/");
-                } case "showAuthenticationPage" -> {
-                    if (AuthenticatedUser.isThisUserAuthenticated()) {
-                        log.setActionName("Redirect from an inaccessible page");
-                        log.setActionDescription("Redirect to default page");
-                    }
-                } case "showLogoutPage" -> {
-                    log.setActionName("Enter to a page");
-                    log.setActionDescription("Enter to page with url GET:/logout");
-                } case "showChatPage" -> {
-                    log.setActionName("Enter to a page");
-                    log.setActionDescription("Enter to page with url GET:/rooms/" +
-                            arguments[0] + "/messages");
-                } case "addMessage" -> {
-                    message = (Message) arguments[1];
-                    log.setActionName("Add a message");
-                    log.setActionDescription("Add message [" + message.getMessage() +
-                            "] with url POST:/rooms/" + arguments[0] + "/messages");
-                } case "showEditMessagePage" -> {
-                    log.setActionName("Enter to a page");
-                    log.setActionDescription("Enter to page with url GET:/rooms/" +
-                            arguments[0] + "/messages/" + arguments[1]);
-                } case "editMessage" -> {
-                    Message oldMessage = roomsService.getMessageById((int) arguments[1]);
-                    message = (Message) arguments[2];
-                    log.setActionName("Edit a message");
-                    log.setActionDescription("Edit message [" + oldMessage.getMessage() +
-                            "] to [" + message.getMessage() + "] with url POST:/rooms/" +
-                            arguments[0] + "/messages/" + arguments[1]);
-                } case "deleteMessage" -> {
-                    message = roomsService.getMessageById((int) arguments[1]);
-                    log.setActionName("Delete a message");
-                    log.setActionDescription("Delete message [" + message.getMessage() +
-                            "] with url POST:/rooms/" + arguments[0] + "/messages/" +
-                            arguments[1] + "/delete");
-                } case "showAdminRoomPage" -> {
-                    log.setActionName("Enter to a page");
-                    log.setActionDescription("Enter to page with url GET:/admin");
-                } case "showLogsPage" -> {
+                case "showIndexPage" -> log.setActionDescription("Enter to page with url GET:/");
+                case "showAuthenticationPage" -> log.setActionDescription("Enter to page with url GET:/login");
+                case "showRegistrationPage" -> log.setActionDescription("Enter to page with url GET:/register");
+                case "showLogoutPage" -> log.setActionDescription("Enter to page with url GET:/logout");
+                case "showChatPage" -> log.setActionDescription("Enter to page with url GET:/rooms/" + arguments[0] + "/messages");
+                case "showEditMessagePage" -> log.setActionDescription("Enter to page with url GET:/rooms/" + arguments[0] + "/messages/" + arguments[1]);
+                case "showAdminRoomPage" -> log.setActionDescription("Enter to page with url GET:/admin");
+                case "showLogsPage" -> {
                     LogsListRequest logsListRequest = (LogsListRequest) arguments[1];
                     log.setActionName("Enter to a page");
                     log.setActionDescription("Enter to page with url GET:/admin/logs" +
@@ -134,9 +118,23 @@ public class LoggingAspect {
                             "&from=" + logsListRequest.getFrom() +
                             "&till=" + logsListRequest.getTill() +
                             "&action=" + arguments[0]);
-                } case "showUsersPage" -> {
-                    log.setActionName("Enter to a page");
-                    log.setActionDescription("Enter to page with url GET:/users");
+                }
+                case "showUsersPage" -> log.setActionDescription("Enter to page with url GET:/users");
+                case "addMessage" -> {
+                    message = (Message) arguments[1];
+                    log.setActionDescription("Add message [" + message.getMessage() +
+                            "] with url POST:/rooms/" + arguments[0] + "/messages");
+                } case "editMessage" -> {
+                    Message oldMessage = roomsService.getMessageById((int) arguments[1]);
+                    message = (Message) arguments[2];
+                    log.setActionDescription("Edit message [" + oldMessage.getMessage() +
+                            "] to [" + message.getMessage() + "] with url POST:/rooms/" +
+                            arguments[0] + "/messages/" + arguments[1]);
+                } case "deleteMessage" -> {
+                    message = roomsService.getMessageById((int) arguments[1]);
+                    log.setActionDescription("Delete message [" + message.getMessage() +
+                            "] with url POST:/rooms/" + arguments[0] + "/messages/" +
+                            arguments[1] + "/delete");
                 }
             }
 

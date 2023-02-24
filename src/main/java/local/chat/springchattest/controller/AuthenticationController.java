@@ -2,6 +2,7 @@ package local.chat.springchattest.controller;
 
 import jakarta.validation.Valid;
 import local.chat.springchattest.entity.User;
+import local.chat.springchattest.factory.UserFactory;
 import local.chat.springchattest.operation.EncryptionUtils;
 import local.chat.springchattest.service.authorities.AuthoritiesService;
 import local.chat.springchattest.service.users.UsersService;
@@ -20,6 +21,7 @@ public class AuthenticationController {
 
     private UsersService usersService;
     private AuthoritiesService authoritiesService;
+    private UserFactory userFactory;
 
     @Autowired
     public void setUsersService(UsersService usersService) {
@@ -29,6 +31,11 @@ public class AuthenticationController {
     @Autowired
     public void setAuthoritiesService(AuthoritiesService authoritiesService) {
         this.authoritiesService = authoritiesService;
+    }
+
+    @Autowired
+    public void setUserFactory(UserFactory userFactory) {
+        this.userFactory = userFactory;
     }
 
     @GetMapping("/login")
@@ -41,6 +48,7 @@ public class AuthenticationController {
                                       BindingResult bindingResult,
                                       Model model)
             throws Exception {
+        System.out.println(userFactory.getCurrentUser());
         if (bindingResult.hasErrors()) {
             return "authentication/login";
         }
@@ -55,11 +63,11 @@ public class AuthenticationController {
             return "authentication/login";
         }
 
-        user.setId(DBUser.getId());
-        user.setPassword(null);
-        user.setAuthority(DBUser.getAuthority());
+        userFactory.getCurrentUser().setId(DBUser.getId());
+        userFactory.getCurrentUser().setPassword(null);
+        userFactory.getCurrentUser().setAuthority(DBUser.getAuthority());
 
-        changeCommonModel(user);
+        changeCommonModel();
 
         return "redirect:/";
     }
@@ -85,14 +93,15 @@ public class AuthenticationController {
             return "authentication/register";
         }
 
-        user.setPassword(EncryptionUtils.encrypt(user.getPassword()));
-        user.setAuthority(authoritiesService.getAuthorityById(1));
+        userFactory.getCurrentUser().setPassword(EncryptionUtils.encrypt(user.getPassword()));
+        userFactory.getCurrentUser().setAuthority(authoritiesService.getAuthorityById(1));
+
         usersService.saveUser(user);
 
-        user.setPassword(null);
-        user.setId(usersService.getUserByNickname(user.getNickname()).getId());
+        userFactory.getCurrentUser().setPassword(null);
+        userFactory.getCurrentUser().setId(usersService.getUserByNickname(user.getNickname()).getId());
 
-        changeCommonModel(user);
+        changeCommonModel();
 
         return "redirect:/";
     }
@@ -100,21 +109,23 @@ public class AuthenticationController {
     @GetMapping("/logout")
     public String showLogoutPage() {
         Map<String, Object> modelsMap = CommonModel.getCommonModels();
-        modelsMap.replace("user", new User());
         modelsMap.remove("onlineUsers");
         modelsMap.remove("totalUsers");
         CommonModel.setCommonModels(modelsMap);
+
+        userFactory.removeCurrentUser();
+
         return "redirect:/login";
     }
 
     @ModelAttribute
     public void getCommonInfo(Model model) {
         model.addAllAttributes(CommonModel.getCommonModels());
+        model.addAttribute("user", userFactory.getCurrentUser());
     }
 
-    private void changeCommonModel(User user) {
+    private void changeCommonModel() {
         Map<String, Object> modelsMap = CommonModel.getCommonModels();
-        modelsMap.replace("user", user);
         modelsMap.put("totalOnline", usersService.countAllUsersOnline());
         modelsMap.put("totalUsers", usersService.countAllUsers());
         CommonModel.setCommonModels(modelsMap);

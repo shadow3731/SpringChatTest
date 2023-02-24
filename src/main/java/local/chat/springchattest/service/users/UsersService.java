@@ -18,4 +18,6 @@ public interface UsersService {
     int countAllUsersOnline();
 
     void saveUser(User user);
+
+    void setLastActionAtByUserId(int id, Date timestamp);
 }

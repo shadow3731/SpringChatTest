@@ -1,17 +1,12 @@
 package local.chat.springchattest.controller;
 
-import local.chat.springchattest.entity.User;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class CommonModel {
 
     private static Map<String, Object> modelsMap = new HashMap<>();
 
     static {
-        modelsMap.put("user", new User());
         modelsMap.put("serverDateTime", new Date());
     }
 
